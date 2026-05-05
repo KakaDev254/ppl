@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Events - The Pet People</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Boxicons CDN -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Styles -->
+    <style>
+      :root {
+        --club-dark-brown: #3f2c00;
+        --club-dark-brown-light: #827559;
+        --club-olive: #454024;
+        --club-olive-light: #868270;
+        --club-rust: #823210;
+        --club-rust-light: #ad7963;
+        --club-taupe: #95866e;
+        --club-taupe-light: #bab0a0;
+        --club-sand: #d2b699;
+        --club-sand-light: #e1cfbc;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #fff;
+        color: #333;
+        padding-top: 0;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(5px);
+        }
+      }
+
+      .animate-bounce {
+        animation: bounce 1s infinite;
+      }
+
+      /* Event card styles */
+      .event-card {
+        transition: all 0.3s ease;
+      }
+
+      .event-card:hover {
+        transform: translateY(-5px);
+      }
+
+      /* Category filter button styles */
+      .filter-btn {
+        transition: all 0.3s ease;
+      }
+
+      .filter-btn.active {
+        background-color: var(--club-rust);
+        color: white;
+        border-color: var(--club-rust);
+      }
+
+      .filter-btn.active i {
+        color: white;
+      }
+
+      .filter-btn:hover:not(.active) {
+        background-color: var(--club-sand);
+        color: var(--club-dark-brown);
+        border-color: var(--club-sand);
+      }
+
+      /* Featured badge */
+      .featured-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: linear-gradient(135deg, #fbbf24, #f59e0b);
+        color: #3b2a1f;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        z-index: 10;
+      }
+
+      /* Past event overlay */
+      .past-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 5;
+      }
+
+      .past-overlay span {
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body class="font-sans antialiased min-h-screen flex flex-col">
+    <!-- NAVBAR (same as index.html) -->
+    <header id="header" class="fixed w-full z-30 top-0 left-0">
+      <!-- INFO BAR -->
+      <div
+        id="info-bar"
+        class="hidden md:flex bg-[var(--club-sand-light)] text-dark text-xs transition-colors duration-300 py-[2px]"
+      >
+        <div
+          class="max-w-7xl mx-auto px-3 sm:px-5 lg:px-8 flex justify-between w-full items-center"
+        >
+          <div class="flex items-center space-x-3">
+            <a
+              href="#"
+              class="hover:text-[var(--club-rust)] transition"
+              aria-label="Facebook"
+            >
+              <i class="bx bxl-facebook text-sm"></i>
+            </a>
+            <a
+              href="https://www.instagram.com/thepetpeopleke"
+              target="_blank"
+              class="hover:text-[var(--club-rust)] transition"
+              aria-label="Instagram"
+            >
+              <i class="bx bxl-instagram text-sm"></i>
+            </a>
+            <a
+              href="#"
+              class="hover:text-[var(--club-rust)] transition"
+              aria-label="Twitter"
+            >
+              <i class="bx bxl-twitter text-sm"></i>
+            </a>
+          </div>
+          <div
+            class="hidden sm:flex justify-center text-[10px] text-dark font-['Montserrat']"
+          >
+            (Mon–Sat: 9am–9pm | Sun: 10am–8pm)
+          </div>
+          <div class="flex items-center space-x-2 font-['Montserrat']">
+            <a
+              href="tel:+254798503335"
+              class="flex items-center space-x-1 hover:text-[var(--club-rust)] transition"
+            >
+              <i class="bx bx-phone text-sm" aria-hidden="true"></i>
+              <span class="sr-only">Call</span>
+              <span class="text-[11px]">+254 798 503 335</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- NAVBAR -->
+      <nav
+        id="navbar"
+        role="navigation"
+        aria-label="Main navigation"
+        class="navbar w-full bg-white shadow-sm fixed top-0 z-50"
+      >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16 items-center">
+            <a href="index.html" class="flex items-center gap-3">
+              <img
+                src="images/logo_ppl.jpg"
+                alt="The Pet People Logo"
+                class="h-10 w-10 md:h-12 md:w-12 object-contain"
+                onerror="this.src = 'https://via.placeholder.com/48?text=PPL'"
+              />
+              <div class="leading-tight">
+                <div class="text-sm font-medium text-[var(--club-dark-brown)]">
+                  ThePetPeople
+                </div>
+                <div class="text-xs text-gray-500 hidden sm:block">
+                  Care • Groom • Love
+                </div>
+              </div>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-6 font-['Inter']">
+              <a
+                href="index.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Home</a
+              >
+              <a
+                href="gallery.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Gallery</a
+              >
+              <a
+                href="events.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Events</a
+              >
+              <a
+                href="index.html#contact"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Contact</a
+              >
+              <a
+                href="blogs.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Blogs</a
+              >
+              <a
+                href="shop.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Shop</a
+              >
+            </div>
+
+            <div
+              class="hidden md:flex items-center space-x-4 font-['Montserrat']"
+            >
+              <a
+                href="cart.html"
+                class="relative text-[var(--club-dark-brown)] hover:text-[var(--club-rust)] transition"
+                aria-label="View Cart"
+              >
+                <i class="bx bx-cart text-2xl"></i>
+                <span
+                  class="cart-count absolute -top-2 -right-2 text-[var(--club-rust)] font-bold text-xs hidden"
+                  >0</span
+                >
+              </a>
+              <a
+                href="login.html"
+                class="inline-block bg-[var(--club-sand-light)] hover:bg-[var(--club-dark-brown)] text-white tracking-wide uppercase py-2.5 px-6 transition duration-300"
+                style="border-radius: 0"
+                >Login</a
+              >
+            </div>
+
+            <button
+              id="mobile-menu-button"
+              type="button"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+              class="md:hidden p-2 rounded focus:outline-none"
+            >
+              <svg
+                id="hamburger-icon"
+                class="h-6 w-6 block"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="var(--club-sand)"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <svg
+                id="close-icon"
+                class="h-6 w-6 hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="var(--club-sand)"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+          <div class="px-4 pb-4 pt-2 space-y-1 font-['Inter']">
+            <a
+              href="index.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Home</a
+            >
+            <a
+              href="gallery.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Gallery</a
+            >
+            <a
+              href="events.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Events</a
+            >
+            <a
+              href="index.html#contact"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Contact</a
+            >
+            <a
+              href="blogs.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Blogs</a
+            >
+            <a
+              href="shop.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Shop</a
+            >
+            <a
+              href="cart.html"
+              class="mobile-nav-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100"
+            >
+              <i class="bx bx-cart text-xl"></i> View Cart
+              <span
+                class="cart-count bg-[var(--club-rust)] text-white text-xs font-bold px-1.5 py-0.5 rounded-full hidden"
+                >0</span
+              >
+            </a>
+            <div class="pt-2">
+              <a
+                href="login.html"
+                class="block bg-[var(--club-sand-light)] hover:bg-[var(--club-dark-brown)] text-white uppercase py-2.5 px-6 text-center transition"
+                >Login</a
+              >
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1">
+      <!-- HERO SECTION -->
+      <section class="relative h-[50vh] md:h-[60vh] w-full overflow-hidden">
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          class="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="videos/hero4.mp4" type="video/mp4" />
+        </video>
+
+        <div class="absolute inset-0 bg-black/50 z-0"></div>
+
+        <div
+          class="relative z-10 flex flex-col items-center justify-center h-full text-center px-6"
+        >
+          <h1 class="text-4xl sm:text-5xl font-['Cinzel'] text-white mb-3">
+            Upcoming <span class="text-[var(--club-sand-light)]">Events</span>
+          </h1>
+          <p class="text-white/80 text-md md:text-lg max-w-3xl">
+            Join our vibrant community for fun, educational, and social events
+            for pets and their humans
+          </p>
+        </div>
+      </section>
+
+      <!-- EVENTS SECTION -->
+      <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+          <!-- Section Title -->
+          <div class="text-center mb-12">
+            <h2
+              class="text-3xl md:text-4xl font-['Cinzel'] text-[var(--club-dark-brown)] mb-4"
+            >
+              Our <span class="text-[var(--club-rust)]">Events</span>
+            </h2>
+            <p class="text-[var(--club-olive)] max-w-2xl mx-auto">
+              From fun social gatherings to educational workshops, there's
+              always something exciting happening at ThePetPeople
+            </p>
+          </div>
+
+          <!-- Category Filters -->
+          <div
+            class="flex flex-wrap justify-center gap-3 mb-8"
+            id="category-filters"
+          >
+            <!-- Filter buttons will be dynamically generated -->
+          </div>
+
+          <!-- Search Bar -->
+          <div class="max-w-md mx-auto mb-12">
+            <div class="relative">
+              <i
+                class="bx bx-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+              ></i>
+              <input
+                type="text"
+                id="search-events"
+                placeholder="Search events..."
+                class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--club-rust)] focus:ring-2 focus:ring-[var(--club-rust-light)] transition"
+              />
+            </div>
+          </div>
+
+          <!-- Counter Display -->
+          <div class="text-center mb-8">
+            <p class="text-[var(--club-olive)]">
+              Showing <span id="visible-count">0</span> of
+              <span id="total-count">0</span> events
+            </p>
+          </div>
+
+          <!-- Events Grid -->
+          <div
+            id="events-grid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            <!-- Events will be dynamically generated here -->
+          </div>
+
+          <!-- No Results Message -->
+          <div id="no-results" class="text-center py-12 hidden">
+            <i
+              class="bx bx-calendar-x text-6xl text-[var(--club-taupe)] mb-4"
+            ></i>
+            <p class="text-[var(--club-dark-brown-light)] text-lg">
+              No events found matching your criteria.
+            </p>
+            <p class="text-[var(--club-olive-light)] mt-2">
+              Try adjusting your search or filter!
+            </p>
+          </div>
+
+          <!-- Load More Button -->
+          <div
+            class="text-center mt-12"
+            id="load-more-container"
+            style="display: none"
+          >
+            <button
+              id="load-more-btn"
+              class="px-8 py-3 bg-[var(--club-taupe)] hover:bg-[var(--club-rust)] text-white rounded-lg transition font-semibold"
+            >
+              Load More Events
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CALL TO ACTION SECTION -->
+      <section class="py-20 bg-[var(--club-sand-light)]">
+        <div class="max-w-4xl mx-auto text-center px-6">
+          <h2
+            class="text-3xl md:text-4xl font-['Cinzel'] text-[var(--club-dark-brown)] mb-4"
+          >
+            Host Your Own Event?
+          </h2>
+          <p class="text-[var(--club-olive)] mb-8 text-lg">
+            Interested in partnering with us or hosting an event at
+            ThePetPeople? We'd love to collaborate!
+          </p>
+          <a
+            href="#contact"
+            class="inline-block px-8 py-3 bg-[var(--club-rust)] hover:bg-[var(--club-dark-brown)] text-white rounded-lg transition font-semibold"
+          >
+            Contact Us to Collaborate
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER (same as index.html) -->
+    <footer
+      class="bg-[var(--club-taupe)] text-gray-200 pt-16 pb-8 font-['Inter']"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12"
+      >
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <img
+              src="images/logo_ppl.jpg"
+              alt="The Pet People Logo"
+              class="h-10 w-10 md:h-12 md:w-12 object-contain"
+              onerror="this.src = 'https://via.placeholder.com/48?text=PPL'"
+            />
+            <h3
+              class="text-3xl font-bold text-[var(--club-olive)] font-['Cormorant_Garamond']"
+            >
+              ThePetPeople
+            </h3>
+          </div>
+        </div>
+        <div>
+          <h4
+            class="text-lg font-semibold text-white mb-4 font-['Cormorant_Garamond']"
+          >
+            Quick Links
+          </h4>
+          <ul class="space-y-3">
+            <li>
+              <a
+                href="index.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html#services"
+                class="hover:text-[var(--club-rust)] transition"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                href="events.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Events</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html#contact"
+                class="hover:text-[var(--club-rust)] transition"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4
+            class="text-lg font-semibold text-white mb-4 font-['Cormorant_Garamond']"
+          >
+            Contact
+          </h4>
+          <ul class="space-y-3 text-white">
+            <li class="flex items-center">
+              <i class="bx bx-map text-white w-6"></i
+              ><span class="ml-2">Redhill, Off Dharamshi Road, Limuru</span>
+            </li>
+            <li class="flex items-center">
+              <i class="bx bx-phone text-white w-6"></i
+              ><span class="ml-2">+254 798 503 335</span>
+            </li>
+            <li class="flex items-center">
+              <i class="bx bx-envelope text-white w-6"></i
+              ><span class="ml-2">thepetpplke@gmail.com</span>
+            </li>
+          </ul>
+          <div class="flex space-x-4 mt-6">
+            <a
+              href="https://www.instagram.com/thepetpeopleke"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[var(--club-dark-brown)] hover:text-[var(--club-rust)] text-2xl transition"
+              ><i class="bx bxl-instagram"></i
+            ></a>
+            <a
+              href="https://www.tiktok.com/@thepetpeopleke"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[var(--club-dark-brown)] hover:text-[var(--club-rust)] text-2xl transition"
+              ><i class="bx bxl-tiktok"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="border-t border-[var(--club-olive)] mt-12 pt-6 text-center text-[var(--club-olive)] text-sm"
+      >
+        © <span id="year"></span> ThePetPeople. All rights reserved. |
+        <a
+          href="terms.html"
+          class="hover:underline hover:text-[var(--club-gold)] transition"
+          >Terms & Conditions</a
+        >
+        |
+        <a
+          href="privacy.html"
+          class="hover:underline hover:text-[var(--club-gold)] transition"
+          >Privacy Policy</a
+        >
+      </div>
+    </footer>
+
+    <!-- Events Data and JavaScript -->
+    <script src="js/events-data.js"></script>
+    <script>
+      // State variables
+      let currentFilter = "all";
+      let currentSearchTerm = "";
+      let currentPage = 1;
+      const eventsPerPage = 6;
+      let filteredEvents = [];
+
+      // DOM Elements
+      const eventsGrid = document.getElementById("events-grid");
+      const categoryFilters = document.getElementById("category-filters");
+      const searchInput = document.getElementById("search-events");
+      const visibleCountSpan = document.getElementById("visible-count");
+      const totalCountSpan = document.getElementById("total-count");
+      const noResultsDiv = document.getElementById("no-results");
+      const loadMoreContainer = document.getElementById("load-more-container");
+      const loadMoreBtn = document.getElementById("load-more-btn");
+
+      // Generate category filter buttons
+      function generateFilters() {
+        const filtersHtml = eventCategories
+          .map(
+            (cat) => `
+            <button class="filter-btn px-5 py-2 rounded-full border-2 border-[var(--club-taupe)] text-[var(--club-dark-brown)] font-medium transition-all duration-300 flex items-center gap-2 ${currentFilter === cat.id ? "active" : ""}" data-filter="${cat.id}">
+                <i class='bx ${cat.icon}'></i>
+                <span>${cat.label}</span>
+            </button>
+        `,
+          )
+          .join("");
+
+        categoryFilters.innerHTML = filtersHtml;
+
+        // Add event listeners to filter buttons
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            currentFilter = btn.dataset.filter;
+            currentPage = 1;
+            updateActiveFilter();
+            filterAndRenderEvents();
+          });
+        });
+      }
+
+      // Update active filter button styling
+      function updateActiveFilter() {
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          if (btn.dataset.filter === currentFilter) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+      }
+
+      // Filter events based on current filter and search term
+      function filterEvents() {
+        let filtered = [...eventsData];
+
+        // Apply category filter
+        if (currentFilter !== "all") {
+          filtered = filtered.filter(
+            (event) =>
+              event.category === currentFilter || event.type === currentFilter,
+          );
+        }
+
+        // Apply search filter
+        if (currentSearchTerm) {
+          const searchLower = currentSearchTerm.toLowerCase();
+          filtered = filtered.filter(
+            (event) =>
+              event.title.toLowerCase().includes(searchLower) ||
+              event.description.toLowerCase().includes(searchLower) ||
+              event.location.toLowerCase().includes(searchLower),
+          );
+        }
+
+        // Sort: upcoming first, then by date
+        filtered.sort((a, b) => {
+          if (a.type === "upcoming" && b.type === "past") return -1;
+          if (a.type === "past" && b.type === "upcoming") return 1;
+          return new Date(a.date) - new Date(b.date);
+        });
+
+        filteredEvents = filtered;
+
+        // Update counts
+        totalCountSpan.textContent = filteredEvents.length;
+
+        return filteredEvents;
+      }
+
+      // Get events for current page
+      function getCurrentPageEvents() {
+        const start = 0;
+        const end = currentPage * eventsPerPage;
+        return filteredEvents.slice(start, end);
+      }
+
+      // Render event cards
+      function renderEvents() {
+        const eventsToShow = getCurrentPageEvents();
+
+        visibleCountSpan.textContent = eventsToShow.length;
+
+        // Show/hide no results and load more button
+        if (filteredEvents.length === 0) {
+          noResultsDiv.classList.remove("hidden");
+          eventsGrid.classList.add("hidden");
+          loadMoreContainer.style.display = "none";
+          return;
+        }
+
+        noResultsDiv.classList.add("hidden");
+        eventsGrid.classList.remove("hidden");
+
+        // Show/hide load more button
+        if (filteredEvents.length > currentPage * eventsPerPage) {
+          loadMoreContainer.style.display = "block";
+        } else {
+          loadMoreContainer.style.display = "none";
+        }
+
+        // Generate HTML for events
+        const eventsHtml = eventsToShow
+          .map((event) => {
+            const isPast = event.type === "past";
+            const formattedDate = formatEventDate(event.date);
+            const categoryIcon =
+              eventCategories.find((c) => c.id === event.category)?.icon ||
+              "bx-calendar";
+
+            return `
+                <div class="event-card bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 relative">
+                    ${event.featured && !isPast ? '<div class="featured-badge"><i class="bx bx-star"></i> Featured</div>' : ""}
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="${event.image}" alt="${event.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" onerror="this.src='https://via.placeholder.com/400x224?text=Event+Image'">
+                        ${
+                          isPast
+                            ? `
+                            <div class="past-overlay">
+                                <span><i class="bx bx-calendar-check"></i> Past Event</span>
+                            </div>
+                        `
+                            : ""
+                        }
+                        <div class="absolute top-3 left-3 bg-[var(--club-rust)] text-white px-3 py-1 rounded-full text-xs font-semibold">
+                            <i class='${categoryIcon} mr-1'></i> ${eventCategories.find((c) => c.id === event.category)?.label || event.category}
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 text-sm text-[var(--club-taupe)] mb-2">
+                            <i class='bx bx-calendar'></i>
+                            <span>${formattedDate}</span>
+                            <i class='bx bx-time ml-2'></i>
+                            <span>${event.time}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-[var(--club-dark-brown)] mb-2">${event.title}</h3>
+                        <div class="flex items-center gap-2 text-sm text-gray-600 mb-3">
+                            <i class='bx bx-map'></i>
+                            <span>${event.location}</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 line-clamp-3">${event.description}</p>
+                        
+                        <!-- Highlights -->
+                        <div class="mb-4">
+                            <div class="flex flex-wrap gap-2">
+                                ${event.highlights
+                                  .slice(0, 3)
+                                  .map(
+                                    (highlight) => `
+                                    <span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
+                                        <i class='bx bx-check-circle text-green-500 mr-1'></i>${highlight}
+                                    </span>
+                                `,
+                                  )
+                                  .join("")}
+                                ${event.highlights.length > 3 ? `<span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">+${event.highlights.length - 3} more</span>` : ""}
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                            <div class="text-[var(--club-rust)] font-bold">
+                                <i class='bx bx-money'></i> ${event.price}
+                            </div>
+                            ${
+                              !isPast
+                                ? `
+                                <a href="${event.registrationLink}" class="inline-block px-4 py-2 bg-[var(--club-sand)] hover:bg-[var(--club-rust)] text-white rounded-lg transition font-semibold text-sm">
+                                    Register Now <i class='bx bx-right-arrow-alt'></i>
+                                </a>
+                            `
+                                : `
+                                ${
+                                  event.galleryLink
+                                    ? `
+                                    <a href="${event.galleryLink}" class="inline-block px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition font-semibold text-sm">
+                                        <i class='bx bx-photo-album'></i> View Photos
+                                    </a>
+                                `
+                                    : `
+                                    <span class="text-gray-400 text-sm"><i class='bx bx-check-circle'></i> Event Completed</span>
+                                `
+                                }
+                            `
+                            }
+                        </div>
+                    </div>
+                </div>
+            `;
+          })
+          .join("");
+
+        eventsGrid.innerHTML = eventsHtml;
+      }
+
+      // Load more events
+      function loadMoreEvents() {
+        currentPage++;
+        renderEvents();
+      }
+
+      // Filter and render events
+      function filterAndRenderEvents() {
+        filterEvents();
+        currentPage = 1;
+        renderEvents();
+      }
+
+      // Search handler
+      function handleSearch() {
+        currentSearchTerm = searchInput.value;
+        currentPage = 1;
+        filterAndRenderEvents();
+      }
+
+      // Debounce search input
+      let searchTimeout;
+      searchInput.addEventListener("input", () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(handleSearch, 300);
+      });
+
+      // Load more button click handler
+      if (loadMoreBtn) {
+        loadMoreBtn.addEventListener("click", loadMoreEvents);
+      }
+
+      // Initialize everything
+      function init() {
+        generateFilters();
+        filterAndRenderEvents();
+      }
+
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+          const hamburger = document.getElementById("hamburger-icon");
+          const closeIcon = document.getElementById("close-icon");
+          if (hamburger && closeIcon) {
+            hamburger.classList.toggle("hidden");
+            closeIcon.classList.toggle("hidden");
+          }
+        });
+      }
+
+      // Update copyright year
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Adjust body padding for fixed navbar
+      const header = document.querySelector("header");
+      if (header) {
+        document.body.style.paddingTop = header.offsetHeight + "px";
+      }
+
+      window.addEventListener("resize", function () {
+        if (header) {
+          document.body.style.paddingTop = header.offsetHeight + "px";
+        }
+      });
+
+      // Start the app
+      init();
+    </script>
+  </body>
+</html>

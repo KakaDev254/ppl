@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Shop - The Pet People</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Boxicons CDN -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Styles -->
+    <style>
+      :root {
+        --club-dark-brown: #3f2c00;
+        --club-dark-brown-light: #827559;
+        --club-olive: #454024;
+        --club-olive-light: #868270;
+        --club-rust: #823210;
+        --club-rust-light: #ad7963;
+        --club-taupe: #95866e;
+        --club-taupe-light: #bab0a0;
+        --club-sand: #d2b699;
+        --club-sand-light: #e1cfbc;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #fff;
+        color: #333;
+        padding-top: 0;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(5px);
+        }
+      }
+
+      .animate-bounce {
+        animation: bounce 1s infinite;
+      }
+
+      /* Product card styles */
+      .product-card {
+        transition: all 0.3s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+      }
+
+      /* Category filter button styles */
+      .filter-btn {
+        transition: all 0.3s ease;
+      }
+
+      .filter-btn.active {
+        background-color: var(--club-rust);
+        color: white;
+        border-color: var(--club-rust);
+      }
+
+      .filter-btn.active i {
+        color: white;
+      }
+
+      .filter-btn:hover:not(.active) {
+        background-color: var(--club-sand);
+        color: var(--club-dark-brown);
+        border-color: var(--club-sand);
+      }
+
+      /* Image gallery thumbnails */
+      .thumbnail-img {
+        transition: all 0.2s ease;
+      }
+
+      .thumbnail-img:hover {
+        transform: scale(1.05);
+        border-color: var(--club-rust);
+      }
+
+      .thumbnail-img.active {
+        border-color: var(--club-rust);
+        box-shadow: 0 0 0 2px var(--club-rust);
+      }
+
+      /* Quick view modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        overflow-y: auto;
+      }
+
+      .modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        max-width: 900px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      /* Rating stars */
+      .rating-stars {
+        color: #fbbf24;
+      }
+
+      /* Line clamp for product descriptions */
+      .line-clamp-1,
+      .line-clamp-2,
+      .line-clamp-3 {
+        display: -webkit-box;
+        overflow: hidden;
+        word-break: break-word;
+        -webkit-box-orient: vertical;
+        box-orient: vertical;
+      }
+
+      .line-clamp-1 {
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+      }
+
+      .line-clamp-2 {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+      }
+
+      .line-clamp-3 {
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+      }
+    </style>
+  </head>
+
+  <body class="font-sans antialiased min-h-screen flex flex-col">
+    <!-- NAVBAR (without cart) -->
+    <header id="header" class="fixed w-full z-30 top-0 left-0">
+      <!-- INFO BAR -->
+      <div
+        id="info-bar"
+        class="hidden md:flex bg-[var(--club-sand-light)] text-dark text-xs transition-colors duration-300 py-[2px]"
+      >
+        <div
+          class="max-w-7xl mx-auto px-3 sm:px-5 lg:px-8 flex justify-between w-full items-center"
+        >
+          <div class="flex items-center space-x-3">
+            <a
+              href="#"
+              class="hover:text-[var(--club-rust)] transition"
+              aria-label="Facebook"
+            >
+              <i class="bx bxl-facebook text-sm"></i>
+            </a>
+            <a
+              href="https://www.instagram.com/thepetpeopleke"
+              target="_blank"
+              class="hover:text-[var(--club-rust)] transition"
+              aria-label="Instagram"
+            >
+              <i class="bx bxl-instagram text-sm"></i>
+            </a>
+            <a
+              href="#"
+              class="hover:text-[var(--club-rust)] transition"
+              aria-label="Twitter"
+            >
+              <i class="bx bxl-twitter text-sm"></i>
+            </a>
+          </div>
+          <div
+            class="hidden sm:flex justify-center text-[10px] text-dark font-['Montserrat']"
+          >
+            (Mon–Sat: 9am–9pm | Sun: 10am–8pm)
+          </div>
+          <div class="flex items-center space-x-2 font-['Montserrat']">
+            <a
+              href="tel:+254798503335"
+              class="flex items-center space-x-1 hover:text-[var(--club-rust)] transition"
+            >
+              <i class="bx bx-phone text-sm" aria-hidden="true"></i>
+              <span class="sr-only">Call</span>
+              <span class="text-[11px]">+254 798 503 335</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- NAVBAR (Cart removed) -->
+      <nav
+        id="navbar"
+        role="navigation"
+        aria-label="Main navigation"
+        class="navbar w-full bg-white shadow-sm fixed top-0 z-50"
+      >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16 items-center">
+            <a href="index.html" class="flex items-center gap-3">
+              <img
+                src="images/logo_ppl.jpg"
+                alt="The Pet People Logo"
+                class="h-10 w-10 md:h-12 md:w-12 object-contain"
+                onerror="this.src = 'https://via.placeholder.com/48?text=PPL'"
+              />
+              <div class="leading-tight">
+                <div class="text-sm font-medium text-[var(--club-dark-brown)]">
+                  ThePetPeople
+                </div>
+                <div class="text-xs text-gray-500 hidden sm:block">
+                  Care • Groom • Love
+                </div>
+              </div>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-6 font-['Inter']">
+              <a
+                href="index.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Home</a
+              >
+              <a
+                href="gallery.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Gallery</a
+              >
+              <a
+                href="events.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Events</a
+              >
+              <a
+                href="index.html#contact"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Contact</a
+              >
+              <a
+                href="blogs.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Blogs</a
+              >
+              <a
+                href="shop.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Shop</a
+              >
+            </div>
+
+            <button
+              id="mobile-menu-button"
+              type="button"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+              class="md:hidden p-2 rounded focus:outline-none"
+            >
+              <svg
+                id="hamburger-icon"
+                class="h-6 w-6 block"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="var(--club-sand)"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <svg
+                id="close-icon"
+                class="h-6 w-6 hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="var(--club-sand)"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+          <div class="px-4 pb-4 pt-2 space-y-1 font-['Inter']">
+            <a
+              href="index.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Home</a
+            >
+            <a
+              href="gallery.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Gallery</a
+            >
+            <a
+              href="events.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Events</a
+            >
+            <a
+              href="index.html#contact"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Contact</a
+            >
+            <a
+              href="blogs.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Blogs</a
+            >
+            <a
+              href="shop.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Shop</a
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1">
+      <!-- HERO SECTION -->
+      <section class="relative h-[40vh] md:h-[50vh] w-full overflow-hidden">
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50 z-10"
+        ></div>
+        <img
+          src="images/about2.jpg"
+          alt="Shop"
+          class="absolute inset-0 w-full h-full object-cover z-0"
+          onerror="
+            this.src = 'https://via.placeholder.com/1920x500?text=Pet+Shop'
+          "
+        />
+
+        <div
+          class="relative z-20 flex flex-col items-center justify-center h-full text-center px-6"
+        >
+          <h1
+            class="text-4xl sm:text-5xl md:text-6xl font-['Cinzel'] text-white mb-4"
+          >
+            Pet <span class="text-[var(--club-sand-light)]">Shop</span>
+          </h1>
+          <p class="text-white/90 text-md md:text-lg max-w-2xl">
+            Quality products for your furry, feathered, and scaly friends
+          </p>
+        </div>
+      </section>
+
+      <!-- SHOP SECTION -->
+      <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+          <!-- Section Header -->
+          <div class="text-center mb-12">
+            <h2
+              class="text-3xl md:text-4xl font-['Cinzel'] text-[var(--club-dark-brown)] mb-4"
+            >
+              Our <span class="text-[var(--club-rust)]">Products</span>
+            </h2>
+            <p class="text-[var(--club-olive)] max-w-2xl mx-auto">
+              Shop premium pet supplies, food, accessories, and more
+            </p>
+          </div>
+
+          <!-- Category Filters -->
+          <div
+            class="flex flex-wrap justify-center gap-3 mb-8"
+            id="category-filters"
+          >
+            <!-- Filter buttons will be dynamically generated -->
+          </div>
+
+          <!-- Search and Sort Bar -->
+          <div
+            class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8"
+          >
+            <div class="relative w-full sm:w-96">
+              <i
+                class="bx bx-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+              ></i>
+              <input
+                type="text"
+                id="search-products"
+                placeholder="Search products..."
+                class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--club-rust)] focus:ring-2 focus:ring-[var(--club-rust-light)] transition"
+              />
+            </div>
+            <div class="flex gap-3">
+              <select
+                id="sort-products"
+                class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--club-rust)] bg-white"
+              >
+                <option value="default">Sort by: Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="name-asc">Name: A to Z</option>
+                <option value="name-desc">Name: Z to A</option>
+                <option value="rating">Highest Rated</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Counter Display -->
+          <div class="text-center mb-8">
+            <p class="text-[var(--club-olive)]">
+              Showing <span id="visible-count">0</span> of
+              <span id="total-count">0</span> products
+            </p>
+          </div>
+
+          <!-- Products Grid -->
+          <div
+            id="products-grid"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          >
+            <!-- Products will be dynamically generated here -->
+            <div class="col-span-full text-center py-8">
+              <div
+                class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-[var(--club-taupe)] border-t-[var(--club-rust)]"
+              ></div>
+              <p class="mt-2 text-[var(--club-olive)]">Loading products...</p>
+            </div>
+          </div>
+
+          <!-- No Results Message -->
+          <div id="no-results" class="text-center py-12 hidden">
+            <i class="bx bx-package text-6xl text-[var(--club-taupe)] mb-4"></i>
+            <p class="text-[var(--club-dark-brown-light)] text-lg">
+              No products found matching your criteria.
+            </p>
+            <p class="text-[var(--club-olive-light)] mt-2">
+              Try adjusting your search or filter!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- WHY SHOP WITH US -->
+      <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+          <h2
+            class="text-3xl font-['Cinzel'] text-center text-[var(--club-dark-brown)] mb-12"
+          >
+            Why Shop With Us
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+              <i
+                class="bx bx-check-shield text-5xl text-[var(--club-rust)] mb-4"
+              ></i>
+              <h3 class="text-xl font-semibold mb-2">Quality Guaranteed</h3>
+              <p class="text-gray-600">
+                All products are vet-approved and sourced from trusted brands
+              </p>
+            </div>
+            <div class="text-center">
+              <i
+                class="bx bx-support text-5xl text-[var(--club-rust)] mb-4"
+              ></i>
+              <h3 class="text-xl font-semibold mb-2">Expert Support</h3>
+              <p class="text-gray-600">
+                Our team is here to help you choose the right products
+              </p>
+            </div>
+            <div class="text-center">
+              <i
+                class="bx bx-whatsapp text-5xl text-[var(--club-rust)] mb-4"
+              ></i>
+              <h3 class="text-xl font-semibold mb-2">Easy WhatsApp Inquiry</h3>
+              <p class="text-gray-600">
+                Simply click "Inquire on WhatsApp" to order
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer
+      class="bg-[var(--club-taupe)] text-gray-200 pt-16 pb-8 font-['Inter']"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12"
+      >
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <img
+              src="images/logo_ppl.jpg"
+              alt="The Pet People Logo"
+              class="h-10 w-10 md:h-12 md:w-12 object-contain"
+              onerror="this.src = 'https://via.placeholder.com/48?text=PPL'"
+            />
+            <h3
+              class="text-3xl font-bold text-[var(--club-olive)] font-['Cormorant_Garamond']"
+            >
+              ThePetPeople
+            </h3>
+          </div>
+        </div>
+        <div>
+          <h4
+            class="text-lg font-semibold text-white mb-4 font-['Cormorant_Garamond']"
+          >
+            Quick Links
+          </h4>
+          <ul class="space-y-3">
+            <li>
+              <a
+                href="index.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html#services"
+                class="hover:text-[var(--club-rust)] transition"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                href="events.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Events</a
+              >
+            </li>
+            <li>
+              <a
+                href="shop.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Shop</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4
+            class="text-lg font-semibold text-white mb-4 font-['Cormorant_Garamond']"
+          >
+            Contact
+          </h4>
+          <ul class="space-y-3 text-white">
+            <li class="flex items-center">
+              <i class="bx bx-map text-white w-6"></i
+              ><span class="ml-2">Redhill, Off Dharamshi Road, Limuru</span>
+            </li>
+            <li class="flex items-center">
+              <i class="bx bx-phone text-white w-6"></i
+              ><span class="ml-2">+254 798 503 335</span>
+            </li>
+            <li class="flex items-center">
+              <i class="bx bx-envelope text-white w-6"></i
+              ><span class="ml-2">thepetpplke@gmail.com</span>
+            </li>
+          </ul>
+          <div class="flex space-x-4 mt-6">
+            <a
+              href="https://www.instagram.com/thepetpeopleke"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[var(--club-dark-brown)] hover:text-[var(--club-rust)] text-2xl transition"
+              ><i class="bx bxl-instagram"></i
+            ></a>
+            <a
+              href="https://www.tiktok.com/@thepetpeopleke"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[var(--club-dark-brown)] hover:text-[var(--club-rust)] text-2xl transition"
+              ><i class="bx bxl-tiktok"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="border-t border-[var(--club-olive)] mt-12 pt-6 text-center text-[var(--club-olive)] text-sm"
+      >
+        © <span id="year"></span> ThePetPeople. All rights reserved. |
+        <a
+          href="terms.html"
+          class="hover:underline hover:text-[var(--club-gold)] transition"
+          >Terms & Conditions</a
+        >
+        |
+        <a
+          href="privacy.html"
+          class="hover:underline hover:text-[var(--club-gold)] transition"
+          >Privacy Policy</a
+        >
+      </div>
+    </footer>
+
+    <!-- Include products data -->
+    <script src="js/products-data.js"></script>
+
+    <!-- Main JavaScript -->
+    <script>
+      // State variables
+      let currentFilter = "all";
+      let currentSearchTerm = "";
+      let currentSort = "default";
+      let filteredProducts = [];
+
+      // DOM Elements
+      const productsGrid = document.getElementById("products-grid");
+      const categoryFilters = document.getElementById("category-filters");
+      const searchInput = document.getElementById("search-products");
+      const sortSelect = document.getElementById("sort-products");
+      const visibleCountSpan = document.getElementById("visible-count");
+      const totalCountSpan = document.getElementById("total-count");
+      const noResultsDiv = document.getElementById("no-results");
+
+      // Generate rating stars HTML
+      function getRatingStars(rating) {
+        const fullStars = Math.floor(rating);
+        const halfStar = rating % 1 >= 0.5;
+        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+        let starsHtml = "";
+        for (let i = 0; i < fullStars; i++) {
+          starsHtml += '<i class="bx bxs-star"></i>';
+        }
+        if (halfStar) {
+          starsHtml += '<i class="bx bxs-star-half"></i>';
+        }
+        for (let i = 0; i < emptyStars; i++) {
+          starsHtml += '<i class="bx bx-star"></i>';
+        }
+        return `<span class="rating-stars">${starsHtml}</span> <span class="text-gray-500 text-sm">(${rating})</span>`;
+      }
+
+      // Generate product card HTML
+      function createProductCard(product) {
+        const discount = product.originalPrice
+          ? getDiscountPercentage(product.originalPrice, product.price)
+          : 0;
+        const whatsappMessage = `Hello! I'm interested in purchasing: ${product.name} (KES ${product.price.toLocaleString()}). Please provide more information.`;
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+
+        return `
+            <div class="product-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer" onclick="openQuickView(${product.id})">
+                <div class="relative overflow-hidden bg-gray-100" style="padding-top: 75%;">
+                    <img src="${product.image}" alt="${product.name}" class="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/400x300?text=Product'">
+                    ${
+                      product.bestseller
+                        ? `
+                        <div class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-2 py-1 rounded-full">
+                            <i class='bx bx-trophy'></i> Bestseller
+                        </div>
+                    `
+                        : ""
+                    }
+                    ${
+                      discount > 0
+                        ? `
+                        <div class="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                            -${discount}%
+                        </div>
+                    `
+                        : ""
+                    }
+                    ${
+                      !product.inStock
+                        ? `
+                        <div class="absolute inset-0 bg-black/60 flex items-center justify-center">
+                            <span class="bg-gray-800 text-white px-4 py-2 rounded-full text-sm font-semibold">Out of Stock</span>
+                        </div>
+                    `
+                        : ""
+                    }
+                </div>
+                <div class="p-4">
+                    <div class="text-xs text-[var(--club-taupe)] mb-1">${product.brand}</div>
+                    <h3 class="font-semibold text-[var(--club-dark-brown)] text-lg mb-2 line-clamp-2">${product.name}</h3>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-xl font-bold text-[var(--club-rust)]">${formatPrice(product.price)}</span>
+                        ${
+                          product.originalPrice
+                            ? `
+                            <span class="text-sm text-gray-400 line-through">${formatPrice(product.originalPrice)}</span>
+                        `
+                            : ""
+                        }
+                    </div>
+                    <div class="flex items-center gap-1 text-sm mb-3">
+                        ${getRatingStars(product.rating)}
+                        <span class="text-gray-400">(${product.reviews})</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="${whatsappUrl}" target="_blank" class="flex-1 text-center px-3 py-2 bg-[var(--club-sand)] hover:bg-[var(--club-rust)] text-white rounded-lg transition font-semibold text-sm" onclick="event.stopPropagation()">
+                            <i class='bx bxl-whatsapp'></i> Inquire
+                        </a>
+                        <button onclick="event.stopPropagation(); openQuickView(${product.id})" class="px-3 py-2 border border-[var(--club-taupe)] text-[var(--club-dark-brown)] hover:bg-[var(--club-sand-light)] rounded-lg transition">
+                            <i class='bx bx-show'></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+      }
+
+      // Generate filter buttons
+      function generateFilters() {
+        const filtersHtml = productCategories
+          .map(
+            (cat) => `
+            <button class="filter-btn px-5 py-2 rounded-full border-2 border-[var(--club-taupe)] text-[var(--club-dark-brown)] font-medium transition-all duration-300 flex items-center gap-2 ${currentFilter === cat.id ? "active" : ""}" data-filter="${cat.id}">
+                <i class='bx ${cat.icon}'></i>
+                <span>${cat.label}</span>
+            </button>
+        `,
+          )
+          .join("");
+
+        categoryFilters.innerHTML = filtersHtml;
+
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            currentFilter = btn.dataset.filter;
+            updateActiveFilter();
+            filterAndRenderProducts();
+          });
+        });
+      }
+
+      // Update active filter
+      function updateActiveFilter() {
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          if (btn.dataset.filter === currentFilter) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+      }
+
+      // Filter and sort products
+      function filterAndSortProducts() {
+        let filtered = [...productsData];
+
+        // Apply category filter
+        if (currentFilter !== "all") {
+          filtered = filtered.filter(
+            (product) => product.category === currentFilter,
+          );
+        }
+
+        // Apply search filter
+        if (currentSearchTerm) {
+          const searchLower = currentSearchTerm.toLowerCase();
+          filtered = filtered.filter(
+            (product) =>
+              product.name.toLowerCase().includes(searchLower) ||
+              product.description.toLowerCase().includes(searchLower) ||
+              product.brand.toLowerCase().includes(searchLower),
+          );
+        }
+
+        // Apply sorting
+        switch (currentSort) {
+          case "price-low":
+            filtered.sort((a, b) => a.price - b.price);
+            break;
+          case "price-high":
+            filtered.sort((a, b) => b.price - a.price);
+            break;
+          case "name-asc":
+            filtered.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+          case "name-desc":
+            filtered.sort((a, b) => b.name.localeCompare(a.name));
+            break;
+          case "rating":
+            filtered.sort((a, b) => b.rating - a.rating);
+            break;
+          default:
+            // Featured first, then bestsellers
+            filtered.sort((a, b) => {
+              if (a.featured && !b.featured) return -1;
+              if (!a.featured && b.featured) return 1;
+              if (a.bestseller && !b.bestseller) return -1;
+              if (!a.bestseller && b.bestseller) return 1;
+              return 0;
+            });
+        }
+
+        filteredProducts = filtered;
+        totalCountSpan.textContent = filteredProducts.length;
+        return filteredProducts;
+      }
+
+      // Render products
+      function renderProducts() {
+        const products = filterAndSortProducts();
+
+        visibleCountSpan.textContent = products.length;
+
+        if (products.length === 0) {
+          noResultsDiv.classList.remove("hidden");
+          productsGrid.classList.add("hidden");
+          return;
+        }
+
+        noResultsDiv.classList.add("hidden");
+        productsGrid.classList.remove("hidden");
+
+        const productsHtml = products
+          .map((product) => createProductCard(product))
+          .join("");
+        productsGrid.innerHTML = productsHtml;
+      }
+
+      // Quick View Modal
+      function openQuickView(productId) {
+        const product = productsData.find((p) => p.id === productId);
+        if (!product) return;
+
+        const discount = product.originalPrice
+          ? getDiscountPercentage(product.originalPrice, product.price)
+          : 0;
+        const whatsappMessage = `Hello! I'm interested in purchasing: ${product.name} (KES ${product.price.toLocaleString()}). Please provide more information.`;
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+
+        const modalHtml = `
+            <div id="quickview-modal" class="modal active" onclick="closeQuickView(event)">
+                <div class="modal-content bg-white rounded-xl overflow-hidden mx-4" onclick="event.stopPropagation()">
+                    <div class="relative">
+                        <button onclick="closeQuickView()" class="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100">
+                            <i class='bx bx-x text-2xl'></i>
+                        </button>
+                        <div class="grid md:grid-cols-2">
+                            <div class="bg-gray-100 p-6">
+                                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover rounded-lg">
+                            </div>
+                            <div class="p-6">
+                                <div class="text-sm text-[var(--club-taupe)] mb-1">${product.brand}</div>
+                                <h2 class="text-2xl font-bold text-[var(--club-dark-brown)] mb-2">${product.name}</h2>
+                                <div class="flex items-center gap-2 mb-4">
+                                    <span class="text-2xl font-bold text-[var(--club-rust)]">${formatPrice(product.price)}</span>
+                                    ${
+                                      product.originalPrice
+                                        ? `
+                                        <span class="text-sm text-gray-400 line-through">${formatPrice(product.originalPrice)}</span>
+                                        <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">-${discount}%</span>
+                                    `
+                                        : ""
+                                    }
+                                </div>
+                                <div class="flex items-center gap-1 mb-4">
+                                    ${getRatingStars(product.rating)}
+                                    <span class="text-gray-400">(${product.reviews} reviews)</span>
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-gray-600 leading-relaxed">${product.description}</p>
+                                </div>
+                                <div class="mb-4">
+                                    <h4 class="font-semibold mb-2">Features:</h4>
+                                    <ul class="space-y-1">
+                                        ${product.features.map((f) => `<li class="text-sm text-gray-600 flex items-center gap-2"><i class='bx bx-check-circle text-green-500'></i> ${f}</li>`).join("")}
+                                    </ul>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 mb-4 text-sm">
+                                    <div><span class="text-gray-500">Weight:</span> ${product.weight}</div>
+                                    <div><span class="text-gray-500">Stock:</span> ${product.inStock ? '<span class="text-green-600">In Stock</span>' : '<span class="text-red-600">Out of Stock</span>'}</div>
+                                </div>
+                                <a href="${whatsappUrl}" target="_blank" class="block text-center w-full px-6 py-3 bg-[var(--club-sand)] hover:bg-[var(--club-rust)] text-white rounded-lg transition font-semibold">
+                                    <i class='bx bxl-whatsapp'></i> Inquire on WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Remove existing modal if any
+        const existingModal = document.getElementById("quickview-modal");
+        if (existingModal) existingModal.remove();
+
+        document.body.insertAdjacentHTML("beforeend", modalHtml);
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeQuickView(event) {
+        const modal = document.getElementById("quickview-modal");
+        if (modal) {
+          if (
+            event &&
+            event.target !== modal &&
+            !event.target.closest(".modal-content")
+          )
+            return;
+          modal.remove();
+          document.body.style.overflow = "";
+        }
+      }
+
+      // Filter and render
+      function filterAndRenderProducts() {
+        renderProducts();
+      }
+
+      // Search handler with debounce
+      let searchTimeout;
+      function handleSearch() {
+        currentSearchTerm = searchInput.value;
+        filterAndRenderProducts();
+      }
+
+      searchInput.addEventListener("input", () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(handleSearch, 300);
+      });
+
+      sortSelect.addEventListener("change", () => {
+        currentSort = sortSelect.value;
+        filterAndRenderProducts();
+      });
+
+      // Initialize
+      function init() {
+        generateFilters();
+        renderProducts();
+      }
+
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+          const hamburger = document.getElementById("hamburger-icon");
+          const closeIcon = document.getElementById("close-icon");
+          if (hamburger && closeIcon) {
+            hamburger.classList.toggle("hidden");
+            closeIcon.classList.toggle("hidden");
+          }
+        });
+      }
+
+      // Update copyright year
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Adjust body padding
+      const header = document.querySelector("header");
+      if (header) document.body.style.paddingTop = header.offsetHeight + "px";
+
+      window.addEventListener("resize", () => {
+        if (header) document.body.style.paddingTop = header.offsetHeight + "px";
+      });
+
+      // Start app
+      init();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1044 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Blogs - The Pet People</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Boxicons CDN -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Styles -->
+    <style>
+      :root {
+        --club-dark-brown: #3f2c00;
+        --club-dark-brown-light: #827559;
+        --club-olive: #454024;
+        --club-olive-light: #868270;
+        --club-rust: #823210;
+        --club-rust-light: #ad7963;
+        --club-taupe: #95866e;
+        --club-taupe-light: #bab0a0;
+        --club-sand: #d2b699;
+        --club-sand-light: #e1cfbc;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #fff;
+        color: #333;
+        padding-top: 0;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(5px);
+        }
+      }
+
+      .animate-bounce {
+        animation: bounce 1s infinite;
+      }
+
+      .blog-card {
+        transition: all 0.3s ease;
+      }
+
+      .blog-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .filter-btn {
+        transition: all 0.3s ease;
+      }
+
+      .filter-btn.active {
+        background-color: var(--club-rust);
+        color: white;
+        border-color: var(--club-rust);
+      }
+
+      .filter-btn.active i {
+        color: white;
+      }
+
+      .filter-btn:hover:not(.active) {
+        background-color: var(--club-sand);
+        color: var(--club-dark-brown);
+        border-color: var(--club-sand);
+      }
+
+      /* Modal styles */
+      .blog-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        overflow-y: auto;
+      }
+
+      .blog-modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .blog-modal-content {
+        max-width: 900px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        background: white;
+        border-radius: 1rem;
+      }
+
+      /* Line clamp */
+      .line-clamp-1,
+      .line-clamp-2,
+      .line-clamp-3 {
+        display: -webkit-box;
+        overflow: hidden;
+        word-break: break-word;
+        -webkit-box-orient: vertical;
+        box-orient: vertical;
+      }
+
+      .line-clamp-1 {
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+      }
+
+      .line-clamp-2 {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+      }
+
+      .line-clamp-3 {
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+      }
+
+      /* Blog content styling - CRITICAL for displaying full content */
+      .blog-content {
+        font-family: "Inter", sans-serif;
+        line-height: 1.8;
+        color: #333;
+      }
+
+      .blog-content h2 {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--club-dark-brown);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-family: "Cormorant Garamond", serif;
+      }
+
+      .blog-content h3 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--club-olive);
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .blog-content h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--club-taupe);
+        margin-top: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .blog-content p {
+        margin-bottom: 1.25rem;
+        line-height: 1.8;
+      }
+
+      .blog-content ul,
+      .blog-content ol {
+        margin: 1rem 0 1.5rem 1.5rem;
+      }
+
+      .blog-content li {
+        margin-bottom: 0.5rem;
+        line-height: 1.6;
+      }
+
+      .blog-content blockquote {
+        border-left: 4px solid var(--club-rust);
+        padding-left: 1.5rem;
+        margin: 1.5rem 0;
+        font-style: italic;
+        color: #555;
+        background: #f9f9f9;
+        padding: 1rem 1.5rem;
+        border-radius: 0 0.5rem 0.5rem 0;
+      }
+
+      .blog-content strong {
+        font-weight: 700;
+        color: var(--club-dark-brown);
+      }
+
+      .blog-content em {
+        font-style: italic;
+      }
+
+      .blog-content hr {
+        margin: 2rem 0;
+        border: 0;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--club-sand-light),
+          transparent
+        );
+      }
+
+      .blog-content img {
+        max-width: 100%;
+        border-radius: 0.5rem;
+        margin: 1rem 0;
+      }
+
+      .comment {
+        transition: all 0.2s ease;
+      }
+
+      .comment:hover {
+        background-color: #f9f9f9;
+      }
+
+      /* Scrollbar styling */
+      .blog-modal-content::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .blog-modal-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+      }
+
+      .blog-modal-content::-webkit-scrollbar-thumb {
+        background: var(--club-taupe);
+        border-radius: 4px;
+      }
+
+      .blog-modal-content::-webkit-scrollbar-thumb:hover {
+        background: var(--club-rust);
+      }
+    </style>
+  </head>
+
+  <body class="font-sans antialiased min-h-screen flex flex-col">
+    <!-- NAVBAR -->
+    <header id="header" class="fixed w-full z-30 top-0 left-0">
+      <div
+        id="info-bar"
+        class="hidden md:flex bg-[var(--club-sand-light)] text-dark text-xs transition-colors duration-300 py-[2px]"
+      >
+        <div
+          class="max-w-7xl mx-auto px-3 sm:px-5 lg:px-8 flex justify-between w-full items-center"
+        >
+          <div class="flex items-center space-x-3">
+            <a href="#" class="hover:text-[var(--club-rust)] transition"
+              ><i class="bx bxl-facebook text-sm"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/thepetpeopleke"
+              target="_blank"
+              class="hover:text-[var(--club-rust)] transition"
+              ><i class="bx bxl-instagram text-sm"></i
+            ></a>
+            <a href="#" class="hover:text-[var(--club-rust)] transition"
+              ><i class="bx bxl-twitter text-sm"></i
+            ></a>
+          </div>
+          <div
+            class="hidden sm:flex justify-center text-[10px] text-dark font-['Montserrat']"
+          >
+            (Mon–Sat: 9am–9pm | Sun: 10am–8pm)
+          </div>
+          <div class="flex items-center space-x-2 font-['Montserrat']">
+            <a
+              href="tel:+254798503335"
+              class="flex items-center space-x-1 hover:text-[var(--club-rust)] transition"
+            >
+              <i class="bx bx-phone text-sm"></i>
+              <span class="text-[11px]">+254 798 503 335</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <nav class="navbar w-full bg-white shadow-sm fixed top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16 items-center">
+            <a href="index.html" class="flex items-center gap-3">
+              <img
+                src="images/logo_ppl.jpg"
+                alt="Logo"
+                class="h-10 w-10 md:h-12 md:w-12 object-contain"
+                onerror="this.src = 'https://via.placeholder.com/48?text=PPL'"
+              />
+              <div class="leading-tight">
+                <div class="text-sm font-medium text-[var(--club-dark-brown)]">
+                  ThePetPeople
+                </div>
+                <div class="text-xs text-gray-500 hidden sm:block">
+                  Care • Groom • Love
+                </div>
+              </div>
+            </a>
+            <div class="hidden md:flex items-center space-x-6">
+              <a
+                href="index.html"
+                class="text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Home</a
+              >
+              <a
+                href="gallery.html"
+                class="text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Gallery</a
+              >
+              <a
+                href="events.html"
+                class="text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Events</a
+              >
+              <a
+                href="index.html#contact"
+                class="text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Contact</a
+              >
+              <a
+                href="blogs.html"
+                class="text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Blogs</a
+              >
+              <a
+                href="shop.html"
+                class="text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Shop</a
+              >
+            </div>
+            <div class="hidden md:flex items-center space-x-4">
+              <a
+                href="login.html"
+                class="bg-[var(--club-sand-light)] hover:bg-[var(--club-dark-brown)] text-white tracking-wide uppercase py-2.5 px-6 transition"
+                >Login</a
+              >
+            </div>
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded">
+              <svg
+                id="hamburger-icon"
+                class="h-6 w-6 block"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="var(--club-sand)"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <svg
+                id="close-icon"
+                class="h-6 w-6 hidden"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="var(--club-sand)"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+          <div class="px-4 pb-4 pt-2 space-y-1">
+            <a
+              href="index.html"
+              class="block px-3 py-2 rounded hover:bg-gray-100"
+              >Home</a
+            >
+            <a
+              href="gallery.html"
+              class="block px-3 py-2 rounded hover:bg-gray-100"
+              >Gallery</a
+            >
+            <a
+              href="events.html"
+              class="block px-3 py-2 rounded hover:bg-gray-100"
+              >Events</a
+            >
+            <a
+              href="index.html#contact"
+              class="block px-3 py-2 rounded hover:bg-gray-100"
+              >Contact</a
+            >
+            <a
+              href="blogs.html"
+              class="block px-3 py-2 rounded hover:bg-gray-100"
+              >Blogs</a
+            >
+            <a
+              href="shop.html"
+              class="block px-3 py-2 rounded hover:bg-gray-100"
+              >Shop</a
+            >
+            <a
+              href="login.html"
+              class="block bg-[var(--club-sand-light)] text-white uppercase py-2.5 px-6 text-center mt-2"
+              >Login</a
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1">
+      <!-- HERO SECTION -->
+      <section class="relative h-[40vh] md:h-[50vh] w-full overflow-hidden">
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50 z-10"
+        ></div>
+        <img
+          src="images/blogs-hero.jpg"
+          alt="Blogs"
+          class="absolute inset-0 w-full h-full object-cover z-0"
+          onerror="
+            this.src = 'https://via.placeholder.com/1920x500?text=Pet+Blogs'
+          "
+        />
+        <div
+          class="relative z-20 flex flex-col items-center justify-center h-full text-center px-6"
+        >
+          <h1
+            class="text-4xl sm:text-5xl md:text-6xl font-['Cinzel'] text-white mb-4"
+          >
+            Our <span class="text-[var(--club-sand-light)]">Blog</span>
+          </h1>
+          <p class="text-white/90 text-md md:text-lg max-w-2xl">
+            Expert advice, tips, and stories for pet lovers
+          </p>
+        </div>
+      </section>
+
+      <!-- BLOG SECTION -->
+      <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+          <div class="text-center mb-12">
+            <h2
+              class="text-3xl md:text-4xl font-['Cinzel'] text-[var(--club-dark-brown)] mb-4"
+            >
+              Latest <span class="text-[var(--club-rust)]">Articles</span>
+            </h2>
+            <p class="text-[var(--club-olive)] max-w-2xl mx-auto">
+              Helpful information and tips for happy, healthy pets
+            </p>
+          </div>
+
+          <div
+            class="flex flex-wrap justify-center gap-3 mb-8"
+            id="category-filters"
+          ></div>
+
+          <div class="max-w-md mx-auto mb-12">
+            <div class="relative">
+              <i
+                class="bx bx-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+              ></i>
+              <input
+                type="text"
+                id="search-blogs"
+                placeholder="Search articles..."
+                class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--club-rust)] focus:ring-2 focus:ring-[var(--club-rust-light)] transition"
+              />
+            </div>
+          </div>
+
+          <div class="text-center mb-8">
+            <p class="text-[var(--club-olive)]">
+              Showing <span id="visible-count">0</span> of
+              <span id="total-count">0</span> articles
+            </p>
+          </div>
+
+          <div
+            id="blogs-grid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            <div class="col-span-full text-center py-8">
+              <div
+                class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-[var(--club-taupe)] border-t-[var(--club-rust)]"
+              ></div>
+              <p class="mt-2 text-[var(--club-olive)]">Loading articles...</p>
+            </div>
+          </div>
+
+          <div id="no-results" class="text-center py-12 hidden">
+            <i class="bx bx-news text-6xl text-[var(--club-taupe)] mb-4"></i>
+            <p class="text-[var(--club-dark-brown-light)] text-lg">
+              No articles found matching your criteria.
+            </p>
+            <p class="text-[var(--club-olive-light)] mt-2">
+              Try adjusting your search or filter!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEWSLETTER SECTION -->
+      <section class="py-16 bg-[var(--club-sand-light)]">
+        <div class="max-w-3xl mx-auto text-center px-6">
+          <i class="bx bx-envelope text-5xl text-[var(--club-rust)] mb-4"></i>
+          <h2
+            class="text-3xl font-['Cinzel'] text-[var(--club-dark-brown)] mb-4"
+          >
+            Subscribe to Our Newsletter
+          </h2>
+          <p class="text-[var(--club-olive)] mb-6">
+            Get the latest pet care tips and updates straight to your inbox
+          </p>
+          <form
+            id="newsletter-form"
+            class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
+          >
+            <input
+              type="email"
+              placeholder="Your email address"
+              required
+              class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--club-rust)]"
+            />
+            <button
+              type="submit"
+              class="px-6 py-3 bg-[var(--club-rust)] hover:bg-[var(--club-dark-brown)] text-white rounded-lg transition font-semibold"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[var(--club-taupe)] text-gray-200 pt-16 pb-8">
+      <div
+        class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12"
+      >
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <img
+              src="images/logo_ppl.jpg"
+              alt="Logo"
+              class="h-10 w-10 md:h-12 md:w-12 object-contain"
+            />
+            <h3
+              class="text-3xl font-bold text-[var(--club-olive)] font-['Cormorant_Garamond']"
+            >
+              ThePetPeople
+            </h3>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
+          <ul class="space-y-3">
+            <li>
+              <a
+                href="index.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html#services"
+                class="hover:text-[var(--club-rust)] transition"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                href="events.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Events</a
+              >
+            </li>
+            <li>
+              <a
+                href="blogs.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Blogs</a
+              >
+            </li>
+            <li>
+              <a
+                href="shop.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Shop</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold text-white mb-4">Contact</h4>
+          <ul class="space-y-3">
+            <li class="flex items-center">
+              <i class="bx bx-map text-white w-6"></i
+              ><span class="ml-2">Redhill, Off Dharamshi Road, Limuru</span>
+            </li>
+            <li class="flex items-center">
+              <i class="bx bx-phone text-white w-6"></i
+              ><span class="ml-2">+254 798 503 335</span>
+            </li>
+            <li class="flex items-center">
+              <i class="bx bx-envelope text-white w-6"></i
+              ><span class="ml-2">thepetpplke@gmail.com</span>
+            </li>
+          </ul>
+          <div class="flex space-x-4 mt-6">
+            <a
+              href="https://www.instagram.com/thepetpeopleke"
+              target="_blank"
+              class="text-[var(--club-dark-brown)] hover:text-[var(--club-rust)] text-2xl"
+              ><i class="bx bxl-instagram"></i
+            ></a>
+            <a
+              href="https://www.tiktok.com/@thepetpeopleke"
+              target="_blank"
+              class="text-[var(--club-dark-brown)] hover:text-[var(--club-rust)] text-2xl"
+              ><i class="bx bxl-tiktok"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="border-t border-[var(--club-olive)] mt-12 pt-6 text-center text-[var(--club-olive)] text-sm"
+      >
+        © <span id="year"></span> ThePetPeople. All rights reserved. |
+        <a href="terms.html" class="hover:underline">Terms & Conditions</a> |
+        <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+      </div>
+    </footer>
+
+    <!-- Include blogs data -->
+    <script src="js/blogs-data.js"></script>
+
+    <!-- Main JavaScript -->
+    <script>
+      // State variables
+      let currentFilter = "all";
+      let currentSearchTerm = "";
+      let filteredBlogs = [];
+
+      // DOM Elements
+      const blogsGrid = document.getElementById("blogs-grid");
+      const categoryFilters = document.getElementById("category-filters");
+      const searchInput = document.getElementById("search-blogs");
+      const visibleCountSpan = document.getElementById("visible-count");
+      const totalCountSpan = document.getElementById("total-count");
+      const noResultsDiv = document.getElementById("no-results");
+
+      // Generate filter buttons
+      function generateFilters() {
+        const filtersHtml = blogCategories
+          .map(
+            (cat) => `
+            <button class="filter-btn px-5 py-2 rounded-full border-2 border-[var(--club-taupe)] text-[var(--club-dark-brown)] font-medium transition-all duration-300 flex items-center gap-2 ${currentFilter === cat.id ? "active" : ""}" data-filter="${cat.id}">
+                <i class='bx ${cat.icon}'></i>
+                <span>${cat.label}</span>
+            </button>
+        `,
+          )
+          .join("");
+
+        categoryFilters.innerHTML = filtersHtml;
+
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            currentFilter = btn.dataset.filter;
+            updateActiveFilter();
+            filterAndRenderBlogs();
+          });
+        });
+      }
+
+      function updateActiveFilter() {
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          if (btn.dataset.filter === currentFilter) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+      }
+
+      // Create blog card HTML
+      function createBlogCard(blog) {
+        const formattedDate = formatBlogDate(blog.date);
+
+        return `
+            <div class="blog-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer" onclick="openBlogModal(${blog.id})">
+                <div class="relative overflow-hidden bg-gray-100" style="padding-top: 56.25%;">
+                    <img src="${blog.image}" alt="${blog.title}" class="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/400x225?text=Blog+Image'">
+                    ${
+                      blog.featured
+                        ? `
+                        <div class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-2 py-1 rounded-full">
+                            <i class='bx bx-star'></i> Featured
+                        </div>
+                    `
+                        : ""
+                    }
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center gap-3 text-xs text-gray-500 mb-3 flex-wrap">
+                        <span class="flex items-center gap-1"><i class='bx bx-calendar'></i> ${formattedDate}</span>
+                        <span class="flex items-center gap-1"><i class='bx bx-time'></i> ${getReadTimeText(blog.readTime)}</span>
+                        <span class="flex items-center gap-1"><i class='bx bx-show'></i> ${blog.views}</span>
+                    </div>
+                    <h3 class="font-bold text-xl text-[var(--club-dark-brown)] mb-2 line-clamp-2">${blog.title}</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">${blog.excerpt}</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full overflow-hidden">
+                                <img src="${blog.authorImage}" alt="${blog.author}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/32?text=User'">
+                            </div>
+                            <span class="text-sm text-gray-600">${blog.author}</span>
+                        </div>
+                        <span class="text-[var(--club-rust)] text-sm font-medium">Read more →</span>
+                    </div>
+                </div>
+            </div>
+        `;
+      }
+
+      // Filter and sort blogs
+      function filterBlogs() {
+        let filtered = [...blogsData];
+
+        if (currentFilter !== "all") {
+          filtered = filtered.filter((blog) => blog.category === currentFilter);
+        }
+
+        if (currentSearchTerm) {
+          const searchLower = currentSearchTerm.toLowerCase();
+          filtered = filtered.filter(
+            (blog) =>
+              blog.title.toLowerCase().includes(searchLower) ||
+              blog.excerpt.toLowerCase().includes(searchLower) ||
+              blog.content.toLowerCase().includes(searchLower) ||
+              blog.tags.some((tag) => tag.toLowerCase().includes(searchLower)),
+          );
+        }
+
+        filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        filteredBlogs = filtered;
+        totalCountSpan.textContent = filteredBlogs.length;
+        return filteredBlogs;
+      }
+
+      function renderBlogs() {
+        const blogs = filterBlogs();
+
+        visibleCountSpan.textContent = blogs.length;
+
+        if (blogs.length === 0) {
+          noResultsDiv.classList.remove("hidden");
+          blogsGrid.classList.add("hidden");
+          return;
+        }
+
+        noResultsDiv.classList.add("hidden");
+        blogsGrid.classList.remove("hidden");
+
+        const blogsHtml = blogs.map((blog) => createBlogCard(blog)).join("");
+        blogsGrid.innerHTML = blogsHtml;
+      }
+
+      // Open blog modal for full article
+      window.openBlogModal = function (blogId) {
+        const blog = blogsData.find((b) => b.id === blogId);
+        if (!blog) return;
+
+        const formattedDate = formatBlogDate(blog.date);
+
+        const modalHtml = `
+            <div id="blog-modal" class="blog-modal active" onclick="closeBlogModal(event)">
+                <div class="blog-modal-content" onclick="event.stopPropagation()">
+                    <div class="relative">
+                        <button onclick="closeBlogModal()" class="sticky top-4 float-right z-20 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 mr-4 mt-4">
+                            <i class='bx bx-x text-2xl'></i>
+                        </button>
+                        
+                        <img src="${blog.image}" alt="${blog.title}" class="w-full h-80 object-cover">
+                        
+                        <div class="p-6 md:p-8">
+                            <div class="flex items-center gap-3 text-sm text-gray-500 mb-4 flex-wrap">
+                                <span class="flex items-center gap-1"><i class='bx bx-calendar'></i> ${formattedDate}</span>
+                                <span class="flex items-center gap-1"><i class='bx bx-time'></i> ${getReadTimeText(blog.readTime)}</span>
+                                <span class="flex items-center gap-1"><i class='bx bx-show'></i> ${blog.views} views</span>
+                                <span class="flex items-center gap-1"><i class='bx bx-message'></i> ${blog.comments.length} comments</span>
+                            </div>
+                            
+                            <h1 class="text-2xl md:text-4xl font-bold text-[var(--club-dark-brown)] mb-4">${blog.title}</h1>
+                            
+                            <div class="flex items-center gap-3 mb-6 pb-4 border-b">
+                                <div class="w-12 h-12 bg-gray-300 rounded-full overflow-hidden">
+                                    <img src="${blog.authorImage}" alt="${blog.author}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/48?text=User'">
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-[var(--club-dark-brown)]">${blog.author}</div>
+                                    <div class="text-sm text-gray-500">Pet Care Expert</div>
+                                </div>
+                            </div>
+                            
+                            <div class="blog-content">
+                                ${blog.content}
+                            </div>
+                            
+                            <!-- Tags -->
+                            <div class="mt-8 pt-4 border-t">
+                                <h4 class="font-semibold mb-3">Tags:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    ${blog.tags.map((tag) => `<span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">#${tag}</span>`).join("")}
+                                </div>
+                            </div>
+                            
+                            <!-- Share Buttons -->
+                            <div class="mt-8 pt-4 border-t">
+                                <h4 class="font-semibold mb-3">Share this article:</h4>
+                                <div class="flex gap-3">
+                                    <button onclick="shareArticle('facebook', '${blog.title}', '${window.location.href}')" class="bg-[#1877f2] text-white px-4 py-2 rounded-lg hover:opacity-80 transition">
+                                        <i class='bx bxl-facebook'></i> Facebook
+                                    </button>
+                                    <button onclick="shareArticle('twitter', '${blog.title}', '${window.location.href}')" class="bg-[#1da1f2] text-white px-4 py-2 rounded-lg hover:opacity-80 transition">
+                                        <i class='bx bxl-twitter'></i> Twitter
+                                    </button>
+                                    <button onclick="shareArticle('whatsapp', '${blog.title}', '${window.location.href}')" class="bg-[#25d366] text-white px-4 py-2 rounded-lg hover:opacity-80 transition">
+                                        <i class='bx bxl-whatsapp'></i> WhatsApp
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Comments Section -->
+                            <div class="mt-8 pt-4 border-t">
+                                <h3 class="text-xl font-bold mb-4">Comments (${blog.comments.length})</h3>
+                                <div id="comments-section">
+                                    ${blog.comments
+                                      .map(
+                                        (comment) => `
+                                        <div class="comment bg-gray-50 p-4 rounded-lg mb-3">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <span class="font-semibold text-[var(--club-dark-brown)]">${comment.name}</span>
+                                                <span class="text-xs text-gray-500">${formatBlogDate(comment.date)}</span>
+                                            </div>
+                                            <p class="text-gray-600 text-sm">${comment.comment}</p>
+                                            <button onclick="likeComment(${blog.id}, ${comment.id})" class="text-xs text-[var(--club-rust)] mt-2 hover:underline">
+                                                <i class='bx bx-like'></i> Like (${comment.likes})
+                                            </button>
+                                        </div>
+                                    `,
+                                      )
+                                      .join("")}
+                                </div>
+                                
+                                <!-- Add Comment Form -->
+                                <div class="mt-6">
+                                    <h4 class="font-semibold mb-3">Leave a Comment</h4>
+                                    <form id="comment-form-${blog.id}" onsubmit="addComment(event, ${blog.id})">
+                                        <input type="text" id="comment-name-${blog.id}" placeholder="Your name" required class="w-full mb-3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--club-rust)]">
+                                        <textarea id="comment-text-${blog.id}" rows="4" placeholder="Your comment" required class="w-full mb-3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--club-rust)]"></textarea>
+                                        <button type="submit" class="px-4 py-2 bg-[var(--club-sand)] hover:bg-[var(--club-rust)] text-white rounded-lg transition">Post Comment</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const existingModal = document.getElementById("blog-modal");
+        if (existingModal) existingModal.remove();
+
+        document.body.insertAdjacentHTML("beforeend", modalHtml);
+        document.body.style.overflow = "hidden";
+      };
+
+      window.closeBlogModal = function (event) {
+        const modal = document.getElementById("blog-modal");
+        if (modal) {
+          if (
+            event &&
+            event.target !== modal &&
+            !event.target.closest(".blog-modal-content")
+          )
+            return;
+          modal.remove();
+          document.body.style.overflow = "";
+        }
+      };
+
+      // Share function
+      window.shareArticle = function (platform, title, url) {
+        let shareUrl = "";
+        switch (platform) {
+          case "facebook":
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+            break;
+          case "twitter":
+            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
+            break;
+          case "whatsapp":
+            shareUrl = `https://wa.me/?text=${encodeURIComponent(title + " " + url)}`;
+            break;
+        }
+        window.open(shareUrl, "_blank", "width=600,height=400");
+      };
+
+      // Add comment function
+      window.addComment = function (event, blogId) {
+        event.preventDefault();
+        const name = document.getElementById(`comment-name-${blogId}`).value;
+        const comment = document.getElementById(`comment-text-${blogId}`).value;
+
+        if (name && comment) {
+          showMessage(
+            "Thank you for your comment! It will be visible after review.",
+          );
+          document.getElementById(`comment-name-${blogId}`).value = "";
+          document.getElementById(`comment-text-${blogId}`).value = "";
+        }
+      };
+
+      window.likeComment = function (blogId, commentId) {
+        showMessage("Thanks for liking this comment!");
+      };
+
+      function filterAndRenderBlogs() {
+        renderBlogs();
+      }
+
+      // Search handler
+      let searchTimeout;
+      searchInput.addEventListener("input", () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          currentSearchTerm = searchInput.value;
+          filterAndRenderBlogs();
+        }, 300);
+      });
+
+      // Initialize
+      function init() {
+        if (typeof blogsData !== "undefined") {
+          generateFilters();
+          renderBlogs();
+        } else {
+          console.error("blogsData not found");
+          blogsGrid.innerHTML =
+            '<div class="col-span-full text-center py-8 text-red-500">Error loading blog posts. Please refresh the page.</div>';
+        }
+      }
+
+      // Newsletter form
+      const newsletterForm = document.getElementById("newsletter-form");
+      if (newsletterForm) {
+        newsletterForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          showMessage(
+            "Thank you for subscribing! Check your email for confirmation.",
+          );
+          this.reset();
+        });
+      }
+
+      // Mobile menu
+      const mobileMenuBtn = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+          const hamburger = document.getElementById("hamburger-icon");
+          const closeIcon = document.getElementById("close-icon");
+          if (hamburger && closeIcon) {
+            hamburger.classList.toggle("hidden");
+            closeIcon.classList.toggle("hidden");
+          }
+        });
+      }
+
+      // Message function
+      function showMessage(message) {
+        let container = document.getElementById("message-container");
+        if (!container) {
+          container = document.createElement("div");
+          container.id = "message-container";
+          container.className = "fixed top-24 right-5 z-50";
+          document.body.appendChild(container);
+        }
+        const msgDiv = document.createElement("div");
+        msgDiv.className =
+          "bg-[var(--club-sand)] text-white px-4 py-2 rounded-md mb-2 shadow-md";
+        msgDiv.textContent = message;
+        container.appendChild(msgDiv);
+        setTimeout(() => msgDiv.remove(), 3000);
+      }
+
+      // Update copyright
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Adjust body padding
+      const header = document.querySelector("header");
+      if (header) document.body.style.paddingTop = header.offsetHeight + "px";
+      window.addEventListener("resize", () => {
+        if (header) document.body.style.paddingTop = header.offsetHeight + "px";
+      });
+
+      // Start
+      init();
+    </script>
+  </body>
+</html>

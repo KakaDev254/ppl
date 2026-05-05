@@ -1,0 +1,1891 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Home | ThePetPeople</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Boxicons CDN -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Styles -->
+    <style>
+      :root {
+        --club-dark-brown: #3f2c00;
+        --club-dark-brown-light: #827559;
+        --club-olive: #454024;
+        --club-olive-light: #868270;
+        --club-rust: #823210;
+        --club-rust-light: #ad7963;
+        --club-taupe: #95866e;
+        --club-taupe-light: #bab0a0;
+        --club-sand: #d2b699;
+        --club-sand-light: #e1cfbc;
+        --club-lavender: #c5b8a8;
+        --club-brown-medium: #5a4420;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #fff;
+        color: #333;
+        padding-top: 0;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(5px);
+        }
+      }
+
+      .animate-bounce {
+        animation: bounce 1s infinite;
+      }
+
+      /* Ensure cards fill height equally in grid */
+      .auto-rows-fr {
+        grid-auto-rows: 1fr;
+      }
+
+      /* Make all cards in the same row have equal height */
+      #home-events-grid > div {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      /* Card content stretches properly */
+      .event-card-home {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Line clamp utilities - Cross-browser compatible with standard property */
+      .line-clamp-1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        line-clamp: 1; /* Standard property for future compatibility */
+        -webkit-box-orient: vertical;
+        box-orient: vertical; /* Standard property */
+        overflow: hidden;
+      }
+
+      .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2; /* Standard property for future compatibility */
+        -webkit-box-orient: vertical;
+        box-orient: vertical; /* Standard property */
+        overflow: hidden;
+      }
+
+      .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3; /* Standard property for future compatibility */
+        -webkit-box-orient: vertical;
+        box-orient: vertical; /* Standard property */
+        overflow: hidden;
+      }
+
+      /* Even more complete version with all vendor prefixes */
+      .line-clamp-1,
+      .line-clamp-2,
+      .line-clamp-3 {
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+        overflow: hidden;
+        word-break: break-word;
+      }
+
+      .line-clamp-1 {
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+      }
+
+      .line-clamp-2 {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+      }
+
+      .line-clamp-3 {
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+      }
+
+      .line-clamp-1,
+      .line-clamp-2,
+      .line-clamp-3 {
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        box-orient: vertical;
+      }
+    </style>
+  </head>
+
+  <body class="font-sans antialiased min-h-screen flex flex-col">
+    <!-- NAVBAR -->
+    <header id="header" class="fixed w-full z-30 top-0 left-0">
+      <!-- INFO BAR -->
+      <div
+        id="info-bar"
+        class="hidden md:flex bg-[var(--club-sand-light)] text-dark text-xs transition-colors duration-300 py-[2px]"
+      >
+        <div
+          class="max-w-7xl mx-auto px-3 sm:px-5 lg:px-8 flex justify-between w-full items-center"
+        >
+          <div class="flex items-center space-x-3">
+            <a
+              href="#"
+              class="hover:text-[var(--club-rust)] transition"
+              aria-label="Facebook"
+            >
+              <i class="bx bxl-facebook text-sm"></i>
+            </a>
+            <a
+              href="https://www.instagram.com/thepetpeopleke"
+              target="_blank"
+              class="hover:text-[var(--club-rust)] transition"
+              aria-label="Instagram"
+            >
+              <i class="bx bxl-instagram text-sm"></i>
+            </a>
+            <a
+              href="#"
+              class="hover:text-[var(--club-rust)] transition"
+              aria-label="Twitter"
+            >
+              <i class="bx bxl-twitter text-sm"></i>
+            </a>
+          </div>
+          <div
+            class="hidden sm:flex justify-center text-[10px] text-dark font-['Montserrat']"
+          >
+            (Mon–Sat: 9am–9pm | Sun: 10am–8pm)
+          </div>
+          <div class="flex items-center space-x-2 font-['Montserrat']">
+            <a
+              href="tel:+254798503335"
+              class="flex items-center space-x-1 hover:text-[var(--club-rust)] transition"
+            >
+              <i class="bx bx-phone text-sm" aria-hidden="true"></i>
+              <span class="sr-only">Call</span>
+              <span class="text-[11px]">+254 798 503 335</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- NAVBAR -->
+      <nav
+        id="navbar"
+        role="navigation"
+        aria-label="Main navigation"
+        class="navbar w-full bg-white shadow-sm fixed top-0 z-50"
+      >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16 items-center">
+            <a href="index.html" class="flex items-center gap-3">
+              <img
+                src="images/logo_ppl.jpg"
+                alt="The Pet People Logo"
+                class="h-10 w-10 md:h-12 md:w-12 object-contain"
+                onerror="this.src = 'https://via.placeholder.com/48?text=PPL'"
+              />
+              <div class="leading-tight">
+                <div class="text-sm font-medium text-[var(--club-dark-brown)]">
+                  ThePetPeople
+                </div>
+                <div class="text-xs text-gray-500 hidden sm:block">
+                  Care • Groom • Love
+                </div>
+              </div>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-6 font-['Inter']">
+              <a
+                href="index.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Home</a
+              >
+              <a
+                href="gallery.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Gallery</a
+              >
+              <a
+                href="events.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Events</a
+              >
+              <a
+                href="index.html#contact"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Contact</a
+              >
+              <a
+                href="blogs.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Blogs</a
+              >
+              <a
+                href="shop.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Shop</a
+              >
+            </div>
+
+            <button
+              id="mobile-menu-button"
+              type="button"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+              class="md:hidden p-2 rounded focus:outline-none"
+            >
+              <svg
+                id="hamburger-icon"
+                class="h-6 w-6 block"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="var(--club-sand)"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <svg
+                id="close-icon"
+                class="h-6 w-6 hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="var(--club-sand)"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+          <div class="px-4 pb-4 pt-2 space-y-1 font-['Inter']">
+            <a
+              href="index.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Home</a
+            >
+            <a
+              href="gallery.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Gallery</a
+            >
+            <a
+              href="events.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Events</a
+            >
+            <a
+              href="index.html#contact"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Contact</a
+            >
+            <a
+              href="blogs.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Blogs</a
+            >
+            <a
+              href="shop.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Shop</a
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Message container for notifications -->
+    <div id="message-container" class="fixed top-24 right-5 z-50"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1">
+      <!-- HERO SECTION -->
+      <section
+        id="home"
+        class="relative w-full h-[90vh] md:h-screen overflow-hidden font-['Cormorant_Garamond']"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 z-10"
+        ></div>
+
+        <div id="hero-slider" class="absolute inset-0 z-0">
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            class="absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-1000"
+          >
+            <source src="videos/hero1.mp4" type="video/mp4" />
+          </video>
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+          >
+            <source src="videos/hero3.mp4" type="video/mp4" />
+          </video>
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000"
+          >
+            <source src="videos/hero4.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div
+          class="relative z-20 flex flex-col items-center justify-center h-full text-center px-6 sm:px-8 md:px-12 lg:px-20 pt-28 sm:pt-32 md:pt-40 xl:pt-48 py-8 md:py-12"
+        >
+          <h1
+            class="text-3xl sm:text-4xl md:text-6xl mb-4 sm:mb-6 md:mb-8 leading-snug md:leading-tight text-white tracking-wide text-center font-semibold"
+          >
+            <span class="block md:inline">Love Them, Care for&nbsp;</span>
+            <span class="block md:inline">Them</span>
+          </h1>
+          <p
+            class="text-white text-sm sm:text-base md:text-lg mb-8 sm:mb-10 md:mb-12 max-w-xl sm:max-w-2xl font-['Inter'] italic leading-relaxed"
+          >
+            Loving Care, Fun Community
+          </p>
+          <div
+            class="flex flex-col sm:flex-row gap-3 sm:gap-6 mb-10 sm:mb-14 md:mb-16 w-full sm:w-auto justify-center"
+          >
+            <a
+              href="book-service.html"
+              class="inline-block bg-[var(--club-sand)] text-[var(--club-dark-brown)] uppercase tracking-wide py-3 px-8 sm:px-10 shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-300 text-center font-['Inter'] font-medium"
+            >
+              Book Now
+            </a>
+            <a
+              href="#services"
+              class="inline-block border-2 border-[var(--club-taupe)] text-[var(--club-sand)] hover:bg-[var(--club-taupe)] hover:text-white tracking-wide py-3 px-8 sm:px-10 rounded transition duration-300 ease-in-out text-center font-['Inter'] font-medium"
+            >
+              See Services
+            </a>
+          </div>
+          <div
+            class="flex flex-col items-center space-y-2 sm:space-y-3 mt-10 sm:mt-16"
+          >
+            <span
+              class="text-white text-xs sm:text-sm md:text-base uppercase tracking-widest font-['Inter']"
+              >Explore</span
+            >
+            <div
+              class="w-5 h-8 sm:w-6 sm:h-10 border-2 border-[var(--club-sand-light)] rounded-full flex items-start justify-center p-1"
+            >
+              <div
+                class="w-1 h-2 bg-[var(--club-sand-light)] rounded-full animate-bounce"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FLOATING SOCIAL MENU (Mobile only) -->
+      <div class="fixed bottom-6 right-6 md:hidden z-50">
+        <div
+          id="social-icons"
+          class="hidden flex flex-col items-center space-y-3 mb-3"
+        >
+          <a
+            href="https://www.instagram.com/thepetpeopleke"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-12 h-12 flex items-center justify-center rounded-full bg-[#E4405F] text-white shadow-lg hover:scale-110 transition-transform"
+          >
+            <i class="bx bxl-instagram text-2xl"></i>
+          </a>
+          <a
+            href="https://wa.me/254798503335"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-12 h-12 flex items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg hover:scale-110 transition-transform"
+          >
+            <i class="bx bxl-whatsapp text-2xl"></i>
+          </a>
+          <a
+            href="https://www.tiktok.com/@thepetpeopleke?_r=1&_t=ZS-95tZgCDjmYm"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-12 h-12 flex items-center justify-center rounded-full bg-black text-white shadow-lg hover:scale-110 transition-transform"
+          >
+            <i class="bx bxl-tiktok text-2xl"></i>
+          </a>
+        </div>
+        <button
+          id="social-toggle"
+          class="w-14 h-14 flex items-center justify-center rounded-full bg-[var(--club-olive)] text-white shadow-lg hover:scale-105 transition-transform"
+        >
+          <i id="toggle-icon" class="bx bx-message-rounded-dots text-3xl"></i>
+        </button>
+      </div>
+
+      <!-- ABOUT SECTION -->
+      <section id="about" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+          <h2
+            class="text-3xl md:text-4xl font-semibold text-[var(--club-dark-brown)] mb-6 font-['Cormorant_Garamond']"
+          >
+            Why Choose
+            <span class="text-[var(--club-taupe)]">The Pet People?</span>
+          </h2>
+          <p
+            class="text-[var(--club-olive)] max-w-2xl mx-auto mb-12 font-['Inter'] text-lg leading-relaxed"
+          >
+            We're more than a pet hotel — we're a vibrant community for
+            <span class="font-semibold text-[var(--club-rust)]">dogs</span>,
+            <span class="font-semibold text-[var(--club-taupe)]">cats</span>,
+            and
+            <span class="font-semibold text-[var(--club-olive)]"
+              >other pets</span
+            >. From safe play spaces to fun events, we create a welcoming
+            environment where pets and people thrive together.
+          </p>
+
+          <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Feature cards -->
+            <div
+              class="bg-white rounded-lg shadow hover:shadow-xl transition-all duration-300 p-6 flex flex-col h-full"
+            >
+              <div class="overflow-hidden rounded-md">
+                <img
+                  src="images/about1.jpg"
+                  alt="Pet Friendly Spaces"
+                  class="w-full h-60 object-cover hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x240?text=Pet+Spaces'
+                  "
+                />
+              </div>
+              <h3
+                class="text-xl font-semibold text-[var(--club-dark-brown)] mt-4 mb-2 font-['Cormorant_Garamond']"
+              >
+                Spaces For Pets
+              </h3>
+              <p
+                class="text-[var(--club-olive)] font-['Inter'] text-sm leading-relaxed"
+              >
+                Safe and fun spaces for dogs, cats, and other pets to play and
+                bond.
+              </p>
+              <div class="mt-4 pt-3 border-t border-gray-100">
+                <p
+                  class="text-[var(--club-olive)] font-['Inter'] text-sm leading-relaxed"
+                >
+                  Over
+                  <strong class="text-[var(--club-rust)]"
+                    >100+ happy clients</strong
+                  >
+                  trust us to care for their pets.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="bg-white rounded-lg shadow hover:shadow-xl transition-all duration-300 p-6 flex flex-col h-full"
+            >
+              <div class="overflow-hidden rounded-md">
+                <img
+                  src="images/about3.jpg"
+                  alt="Trusted and Loved"
+                  class="w-full h-60 object-cover hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x240?text=Trusted+Care'
+                  "
+                />
+              </div>
+              <h3
+                class="text-xl font-semibold text-[var(--club-dark-brown)] mt-4 mb-2 font-['Cormorant_Garamond']"
+              >
+                Trusted & Loved
+              </h3>
+              <p
+                class="text-[var(--club-olive)] font-['Inter'] text-sm leading-relaxed"
+              >
+                <strong class="font-semibold">Vet-owned and led:</strong> the
+                health, welfare and care of your pets are in dedicated and well
+                trained hands.
+              </p>
+            </div>
+
+            <div
+              class="bg-white rounded-lg shadow hover:shadow-xl transition-all duration-300 p-6 flex flex-col h-full"
+            >
+              <div class="overflow-hidden rounded-md">
+                <img
+                  src="images/dog_couch.jpg"
+                  alt="Safe & Secure"
+                  class="w-full h-60 object-cover hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x240?text=Safe+Secure'
+                  "
+                />
+              </div>
+              <h3
+                class="text-xl font-semibold text-[var(--club-dark-brown)] mt-4 mb-2 font-['Cormorant_Garamond']"
+              >
+                Safe & Secure
+              </h3>
+              <p
+                class="text-[var(--club-olive)] font-['Inter'] text-sm leading-relaxed"
+              >
+                A cozy, homely environment - a home away from home ensures peace
+                of mind for pet owners.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMMUNITY SECTION -->
+      <section id="community" class="py-20 bg-[var(--club-taupe)]">
+        <div
+          class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+        >
+          <div class="relative">
+            <img
+              src="images/community.jpg"
+              alt="Community members socializing"
+              class="shadow-lg object-cover w-full h-[420px] rounded-none"
+              loading="lazy"
+              onerror="
+                this.src = 'https://via.placeholder.com/600x420?text=Community'
+              "
+            />
+          </div>
+          <div>
+            <h4
+              class="text-sm uppercase tracking-widest text-[var(--club-lavender)] font-semibold mb-2 font-['Inter']"
+            >
+              Community members socializing
+            </h4>
+            <h2
+              class="text-3xl md:text-4xl font-semibold text-[var(--club-dark-brown)] mb-4 font-['Cormorant_Garamond'] leading-snug"
+            >
+              More Than Just a Dog Park
+            </h2>
+            <p
+              class="text-white mb-8 leading-relaxed font-['Cormorant_Garamond'] text-base md:text-lg"
+            >
+              ThePetPeople Club is a community where lasting friendships are
+              formed. Our members don't just bring their dogs – they bring their
+              whole families and become part of something special.
+            </p>
+            <div class="grid grid-cols-2 gap-6 mb-8">
+              <div>
+                <h3
+                  class="text-4xl font-semibold text-[var(--club-lavender)] font-['Cormorant_Garamond']"
+                >
+                  10+
+                </h3>
+                <p
+                  class="text-[var(--club-lavender)] text-sm md:text-base font-['Inter']"
+                >
+                  Events Monthly
+                </p>
+              </div>
+              <div>
+                <h3
+                  class="text-4xl font-semibold text-[var(--club-lavender)] font-['Cormorant_Garamond']"
+                >
+                  95%
+                </h3>
+                <p
+                  class="text-[var(--club-lavender)] text-sm md:text-base font-['Inter']"
+                >
+                  Client Satisfaction
+                </p>
+              </div>
+            </div>
+            <a
+              href="events.html"
+              class="inline-block bg-[var(--club-dark-brown)] hover:bg-[var(--club-brown-medium)] text-white font-semibold py-3 px-8 shadow-lg transition-all duration-300 transform hover:scale-105 font-['Inter']"
+              >View Upcoming Events</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICES SECTION -->
+      <section id="services" class="py-20 bg-[#fefcf7]">
+        <div class="max-w-7xl mx-auto px-4">
+          <div class="text-center mb-12">
+            <h2
+              class="text-4xl md:text-5xl font-bold text-[var(--club-dark-brown)] mb-4 font-['Cormorant_Garamond']"
+            >
+              Our Services
+            </h2>
+            <div
+              class="w-24 h-1 bg-[var(--club-taupe)] mx-auto rounded-full"
+            ></div>
+            <p
+              class="text-[var(--club-olive)] max-w-2xl mx-auto mt-6 font-['Inter'] text-lg leading-relaxed"
+            >
+              At The Pet People, we provide premium care for your beloved pets
+              through our range of specialized services.
+            </p>
+          </div>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+              gap: 1.5rem;
+              align-items: stretch;
+            "
+          >
+            <!-- Service cards -->
+            <div
+              style="
+                background: white;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+              "
+            >
+              <div style="width: 100%; height: 250px; overflow: hidden">
+                <img
+                  src="images/cat_boarding.jpg"
+                  alt="Cat Boarding"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.5s ease;
+                  "
+                  loading="lazy"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x250?text=Cat+Boarding'
+                  "
+                  onmouseover="this.style.transform = 'scale(1.1)'"
+                  onmouseout="this.style.transform = 'scale(1)'"
+                />
+              </div>
+              <div
+                style="
+                  padding: 1.25rem;
+                  display: flex;
+                  flex-direction: column;
+                  flex: 1;
+                "
+              >
+                <h3
+                  style="
+                    font-size: 1.25rem;
+                    font-weight: bold;
+                    color: var(--club-dark-brown);
+                    margin-bottom: 0.25rem;
+                  "
+                >
+                  Cat Boarding
+                </h3>
+                <p
+                  style="
+                    color: var(--club-taupe);
+                    font-weight: 600;
+                    font-size: 0.875rem;
+                    margin-bottom: 0.75rem;
+                  "
+                >
+                  Indoor & Outdoor options
+                </p>
+                <p
+                  style="
+                    color: #4b5563;
+                    font-size: 0.875rem;
+                    line-height: 1.5;
+                    flex: 1;
+                    margin-bottom: 1rem;
+                  "
+                >
+                  Safe, comfortable, and enriching environments for your feline
+                  friends.
+                </p>
+                <a
+                  href="book-service.html"
+                  style="
+                    display: inline-block;
+                    width: 100%;
+                    text-align: center;
+                    background: var(--club-dark-brown);
+                    color: white;
+                    font-weight: 600;
+                    padding: 0.625rem;
+                    text-decoration: none;
+                    transition: background 0.3s ease;
+                  "
+                  >Book Now →</a
+                >
+              </div>
+            </div>
+
+            <div
+              style="
+                background: white;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+              "
+            >
+              <div style="width: 100%; height: 250px; overflow: hidden">
+                <img
+                  src="images/about2.jpg"
+                  alt="Dog Boarding"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.5s ease;
+                  "
+                  loading="lazy"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x250?text=Dog+Boarding'
+                  "
+                  onmouseover="this.style.transform = 'scale(1.1)'"
+                  onmouseout="this.style.transform = 'scale(1)'"
+                />
+              </div>
+              <div
+                style="
+                  padding: 1.25rem;
+                  display: flex;
+                  flex-direction: column;
+                  flex: 1;
+                "
+              >
+                <h3
+                  style="
+                    font-size: 1.25rem;
+                    font-weight: bold;
+                    color: var(--club-dark-brown);
+                    margin-bottom: 0.25rem;
+                  "
+                >
+                  Dog Boarding
+                </h3>
+                <p
+                  style="
+                    color: var(--club-taupe);
+                    font-weight: 600;
+                    font-size: 0.875rem;
+                    margin-bottom: 0.75rem;
+                  "
+                >
+                  Indoor & Outdoor options
+                </p>
+                <p
+                  style="
+                    color: #4b5563;
+                    font-size: 0.875rem;
+                    line-height: 1.5;
+                    flex: 1;
+                    margin-bottom: 1rem;
+                  "
+                >
+                  Play areas, exercise sessions, and cozy sleeping quarters.
+                </p>
+                <a
+                  href="book-service.html"
+                  style="
+                    display: inline-block;
+                    width: 100%;
+                    text-align: center;
+                    background: var(--club-dark-brown);
+                    color: white;
+                    font-weight: 600;
+                    padding: 0.625rem;
+                    text-decoration: none;
+                    transition: background 0.3s ease;
+                  "
+                  >Book Now →</a
+                >
+              </div>
+            </div>
+
+            <div
+              style="
+                background: white;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+              "
+            >
+              <div style="width: 100%; height: 250px; overflow: hidden">
+                <img
+                  src="images/about3.jpg"
+                  alt="Pet Grooming"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.5s ease;
+                  "
+                  loading="lazy"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x250?text=Pet+Grooming'
+                  "
+                  onmouseover="this.style.transform = 'scale(1.1)'"
+                  onmouseout="this.style.transform = 'scale(1)'"
+                />
+              </div>
+              <div
+                style="
+                  padding: 1.25rem;
+                  display: flex;
+                  flex-direction: column;
+                  flex: 1;
+                "
+              >
+                <h3
+                  style="
+                    font-size: 1.25rem;
+                    font-weight: bold;
+                    color: var(--club-dark-brown);
+                    margin-bottom: 0.25rem;
+                  "
+                >
+                  Pet Grooming
+                </h3>
+                <p
+                  style="
+                    color: var(--club-taupe);
+                    font-weight: 600;
+                    font-size: 0.875rem;
+                    margin-bottom: 0.75rem;
+                  "
+                >
+                  Full service & styling
+                </p>
+                <p
+                  style="
+                    color: #4b5563;
+                    font-size: 0.875rem;
+                    line-height: 1.5;
+                    flex: 1;
+                    margin-bottom: 1rem;
+                  "
+                >
+                  Bathing, haircuts, nail trimming, and professional styling.
+                </p>
+                <a
+                  href="book-service.html"
+                  style="
+                    display: inline-block;
+                    width: 100%;
+                    text-align: center;
+                    background: var(--club-dark-brown);
+                    color: white;
+                    font-weight: 600;
+                    padding: 0.625rem;
+                    text-decoration: none;
+                    transition: background 0.3s ease;
+                  "
+                  >Book Now →</a
+                >
+              </div>
+            </div>
+
+            <div
+              style="
+                background: white;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+              "
+            >
+              <div style="width: 100%; height: 250px; overflow: hidden">
+                <img
+                  src="images/training.jpg"
+                  alt="Dog Training"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.5s ease;
+                  "
+                  loading="lazy"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x250?text=Dog+Training'
+                  "
+                  onmouseover="this.style.transform = 'scale(1.1)'"
+                  onmouseout="this.style.transform = 'scale(1)'"
+                />
+              </div>
+              <div
+                style="
+                  padding: 1.25rem;
+                  display: flex;
+                  flex-direction: column;
+                  flex: 1;
+                "
+              >
+                <h3
+                  style="
+                    font-size: 1.25rem;
+                    font-weight: bold;
+                    color: var(--club-dark-brown);
+                    margin-bottom: 0.25rem;
+                  "
+                >
+                  Dog Training
+                </h3>
+                <p
+                  style="
+                    color: var(--club-taupe);
+                    font-weight: 600;
+                    font-size: 0.875rem;
+                    margin-bottom: 0.75rem;
+                  "
+                >
+                  Obedience & behavior
+                </p>
+                <p
+                  style="
+                    color: #4b5563;
+                    font-size: 0.875rem;
+                    line-height: 1.5;
+                    flex: 1;
+                    margin-bottom: 1rem;
+                  "
+                >
+                  Professional training and behavioral modification for all
+                  dogs.
+                </p>
+                <a
+                  href="book-service.html"
+                  style="
+                    display: inline-block;
+                    width: 100%;
+                    text-align: center;
+                    background: var(--club-dark-brown);
+                    color: white;
+                    font-weight: 600;
+                    padding: 0.625rem;
+                    text-decoration: none;
+                    transition: background 0.3s ease;
+                  "
+                  >Book Now →</a
+                >
+              </div>
+            </div>
+
+            <div
+              style="
+                background: white;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                position: relative;
+              "
+            >
+              <div
+                style="
+                  position: relative;
+                  width: 100%;
+                  height: 250px;
+                  overflow: hidden;
+                "
+              >
+                <img
+                  src="images/physio.jpg"
+                  alt="Pet Physiotherapy"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    filter: grayscale(100%);
+                    opacity: 0.7;
+                    transition: all 0.5s ease;
+                  "
+                  loading="lazy"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x250?text=Coming+Soon'
+                  "
+                  onmouseover="
+                    this.style.filter = 'grayscale(0%)';
+                    this.style.opacity = '1';
+                  "
+                  onmouseout="
+                    this.style.filter = 'grayscale(100%)';
+                    this.style.opacity = '0.7';
+                  "
+                />
+                <div
+                  style="
+                    position: absolute;
+                    top: 0.75rem;
+                    right: 0.75rem;
+                    background: #eab308;
+                    color: #3b2a1f;
+                    padding: 0.25rem 0.75rem;
+                    font-size: 0.75rem;
+                    font-weight: bold;
+                  "
+                >
+                  🚀 Coming Soon
+                </div>
+              </div>
+              <div
+                style="
+                  padding: 1.25rem;
+                  display: flex;
+                  flex-direction: column;
+                  flex: 1;
+                "
+              >
+                <h3
+                  style="
+                    font-size: 1.25rem;
+                    font-weight: bold;
+                    color: var(--club-dark-brown);
+                    margin-bottom: 0.25rem;
+                  "
+                >
+                  Pet Physio
+                </h3>
+                <p
+                  style="
+                    color: var(--club-taupe);
+                    font-weight: 600;
+                    font-size: 0.875rem;
+                    margin-bottom: 0.75rem;
+                  "
+                >
+                  Rehabilitation & recovery
+                </p>
+                <p
+                  style="
+                    color: #4b5563;
+                    font-size: 0.875rem;
+                    line-height: 1.5;
+                    flex: 1;
+                    margin-bottom: 1rem;
+                  "
+                >
+                  Helping pets recover from injuries and improve mobility.
+                </p>
+                <button
+                  disabled
+                  style="
+                    display: inline-block;
+                    width: 100%;
+                    text-align: center;
+                    background: #9ca3af;
+                    color: white;
+                    font-weight: 600;
+                    padding: 0.625rem;
+                    cursor: not-allowed;
+                    opacity: 0.7;
+                  "
+                >
+                  ⏳ Coming Soon
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA VIDEO SECTION -->
+      <section
+        id="cta"
+        class="relative w-full h-[500px] flex items-center justify-center text-center"
+      >
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          poster="images/ctavid-placeholder.jpg"
+          class="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="videos/cta.mp4" type="video/mp4" />
+        </video>
+        <div class="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
+        <div class="relative z-20 px-6 max-w-3xl text-white">
+          <h2
+            class="text-3xl md:text-5xl font-bold mb-4 font-['Cormorant_Garamond']"
+          >
+            Ready to Join the Pack?
+          </h2>
+          <p
+            class="text-lg md:text-xl mb-8 font-['Inter'] font-light leading-relaxed"
+          >
+            ThePetPeople celebrates all pets — from playful dogs and curious
+            cats to all other pets.
+          </p>
+          <div>
+            <a
+              href="#contact"
+              class="inline-block bg-white text-[var(--club-olive)] hover:bg-[var(--club-sand)] hover:text-white font-medium py-3 px-8 transition font-['Inter']"
+              >Schedule a Visit</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- IN SAFE HANDS SECTION -->
+      <section id="team" class="py-20 bg-[var(--club-sand-light)]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-[var(--club-dark-brown)] mb-4 font-['Cormorant_Garamond']"
+          >
+            In <span class="text-[var(--club-olive)]">Safe Hands</span>
+          </h2>
+          <p
+            class="text-[var(--club-olive)] max-w-2xl mx-auto mb-12 text-lg font-['Inter'] font-light leading-relaxed"
+          >
+            Our dedicated team of caregivers, trainers, and veterinarians
+            ensures every pet receives the best care possible — with safety,
+            comfort, and love at every step.
+          </p>
+          <div class="flex justify-center mb-12">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.2"
+              stroke="var(--club-sand)"
+              class="w-6 h-6 animate-bounce"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </div>
+          <div
+            class="flex flex-col sm:flex-row sm:flex-wrap md:flex-nowrap items-stretch justify-center gap-4 w-full max-w-md mx-auto sm:max-w-none"
+          >
+            <div
+              class="flex items-center justify-center gap-2 border border-[var(--club-dark-brown)] text-[var(--club-dark-brown-light)] px-5 py-3 shadow-sm transition hover:bg-[var(--club-sand-light)] hover:text-white hover:shadow-md w-full sm:w-auto font-['Inter'] text-sm"
+            >
+              <i class="fa-solid fa-shield-dog"></i
+              ><span class="font-medium">KVA Certified</span>
+            </div>
+            <div
+              class="flex items-center justify-center gap-2 border border-[var(--club-dark-brown)] text-[var(--club-dark-brown-light)] px-5 py-3 shadow-sm transition hover:bg-[var(--club-sand-light)] hover:text-white hover:shadow-md w-full sm:w-auto font-['Inter'] text-sm"
+            >
+              <i class="fa-solid fa-paw"></i
+              ><span class="font-medium">KESCAVA Affiliated</span>
+            </div>
+            <div
+              class="flex items-center justify-center gap-2 border border-[var(--club-dark-brown)] text-[var(--club-dark-brown-light)] px-5 py-3 shadow-sm transition hover:bg-[var(--club-sand-light)] hover:text-white hover:shadow-md w-full sm:w-auto font-['Inter'] text-sm"
+            >
+              <i class="fa-solid fa-camera"></i
+              ><span class="font-medium">CCTV Monitoring</span>
+            </div>
+            <div
+              class="flex items-center justify-center gap-2 border border-[var(--club-dark-brown)] text-[var(--club-dark-brown-light)] px-5 py-3 shadow-sm transition hover:bg-[var(--club-sand-light)] hover:text-white hover:shadow-md w-full sm:w-auto font-['Inter'] text-sm"
+            >
+              <i class="fa-solid fa-clock"></i
+              ><span class="font-medium">24/7 Supervision</span>
+            </div>
+            <div
+              class="flex items-center justify-center gap-2 border border-[var(--club-dark-brown)] text-[var(--club-dark-brown-light)] px-5 py-3 shadow-sm transition hover:bg-[var(--club-sand-light)] hover:text-white hover:shadow-md w-full sm:w-auto font-['Inter'] text-sm"
+            >
+              <i class="fa-solid fa-hospital-user"></i
+              ><span class="font-medium"
+                >Vets Available (in partnership with MobiVet Clinic)</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOCIAL PACT SECTION (Dynamic Events) -->
+      <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-[var(--club-dark-brown)] mb-4"
+          >
+            Our <span class="text-[var(--club-rust-light)]">Social Pact</span>
+          </h2>
+          <p
+            class="text-[var(--club-olive-light)] max-w-2xl mx-auto mb-12 text-lg leading-relaxed"
+          >
+            More than just a pet hotel — a community where bonds are formed.
+            Explore past social events and see what's coming next.
+          </p>
+
+          <!-- Responsive Grid: Desktop up to 4 cols, auto-fills available space -->
+          <div
+            id="home-events-grid"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 text-left mb-12 auto-rows-fr"
+          >
+            <!-- Events will be dynamically loaded here -->
+            <div class="col-span-full text-center py-8">
+              <div
+                class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-[var(--club-taupe)] border-t-[var(--club-rust)]"
+              ></div>
+              <p class="mt-2 text-[var(--club-olive)]">Loading events...</p>
+            </div>
+          </div>
+
+          <div class="mt-12">
+            <a
+              href="events.html"
+              class="inline-block bg-[var(--club-taupe)] hover:bg-[var(--club-rust)] text-white font-semibold py-3 px-8 transition"
+            >
+              View All Events →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS SECTION -->
+      <section id="testimonials" class="py-20 bg-[var(--club-sand)]">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-[var(--club-olive)] mb-12 font-['Cormorant_Garamond']"
+          >
+            What our clients say
+          </h2>
+          <div class="grid gap-8 md:grid-cols-3">
+            <div
+              class="bg-white shadow-lg p-6 flex flex-col hover:shadow-2xl transition"
+            >
+              <p
+                class="text-[var(--club-olive)] italic mb-4 font-['Cormorant_Garamond']"
+              >
+                "ThePetPeople Club has been amazing for me and Max, my dog. He
+                gets to socialize while I connect with other pet lovers!"
+              </p>
+              <span
+                class="text-[var(--club-dark-brown)] font-semibold font-['Inter']"
+                >Sarah Johnson</span
+              >
+            </div>
+            <div
+              class="bg-white shadow-lg p-6 flex flex-col hover:shadow-2xl transition"
+            >
+              <p
+                class="text-[var(--club-olive)] italic mb-4 font-['Cormorant_Garamond']"
+              >
+                "Finally found a safe and friendly place for my cat Luna. The
+                staff genuinely cares about every type of pet."
+              </p>
+              <span
+                class="text-[var(--club-dark-brown)] font-semibold font-['Inter']"
+                >Mike Chen</span
+              >
+            </div>
+            <div
+              class="bg-white shadow-lg p-6 flex flex-col hover:shadow-2xl transition"
+            >
+              <p
+                class="text-[var(--club-olive)] italic mb-4 font-['Cormorant_Garamond']"
+              >
+                "Buddy, my iguana, gets the attention he deserves here. The
+                community welcomes exotic pets too — highly recommend!"
+              </p>
+              <span
+                class="text-[var(--club-dark-brown)] font-semibold font-['Inter']"
+                >Emma Davis</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT SECTION -->
+      <section id="contact" class="py-20 bg-[#fdfaf8]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+              <h2
+                class="text-3xl md:text-4xl font-bold text-[var(--club-olive)] mb-6 font-['Cormorant_Garamond']"
+              >
+                Get in <span class="text-[var(--club-taupe)]">Touch</span>
+              </h2>
+              <p class="text-gray-700 mb-8 font-['Cormorant_Garamond']">
+                Have questions about membership, events, or scheduling a visit?
+                Reach out to us — we'd love to hear from you!
+              </p>
+              <ul class="space-y-4 text-gray-800 font-['Cormorant_Garamond']">
+                <li class="flex items-center">
+                  <i
+                    class="fa-solid fa-location-dot text-[#cc5410] text-xl w-8"
+                  ></i
+                  ><span>Nairobi, Kenya – Karen Dog Park Rd</span>
+                </li>
+                <li class="flex items-center">
+                  <i class="fa-solid fa-phone text-[#cc5410] text-xl w-8"></i
+                  ><span>+254 798 503 335</span>
+                </li>
+                <li class="flex items-center">
+                  <i class="fa-solid fa-envelope text-[#cc5410] text-xl w-8"></i
+                  ><span>thepetpplke@gmail.com</span>
+                </li>
+              </ul>
+              <div class="mt-6">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.14278119165!2d36.7090525!3d-1.3175795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1a44c0d11b33%3A0x7d1b85f4dc2621af!2sKaren%20Dog%20Park!5e0!3m2!1sen!2ske!4v1695733382000!5m2!1sen!2ske"
+                  width="100%"
+                  height="200"
+                  style="border: 0"
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  class="shadow-md"
+                ></iframe>
+              </div>
+              <div class="flex space-x-4 mt-6">
+                <a href="#" class="text-gray-600 hover:text-[#a03c08] text-2xl"
+                  ><i class="fa-brands fa-facebook"></i
+                ></a>
+                <a
+                  href="https://www.instagram.com/thepetpeopleke"
+                  class="text-gray-600 hover:text-[#a03c08] text-2xl"
+                  ><i class="fa-brands fa-instagram"></i
+                ></a>
+                <a href="#" class="text-gray-600 hover:text-[#a03c08] text-2xl"
+                  ><i class="fa-brands fa-twitter"></i
+                ></a>
+              </div>
+            </div>
+
+            <div class="bg-white shadow-lg border border-[#f1e5e1] p-8">
+              <form id="contact-form-static" class="space-y-6 font-['Inter']">
+                <div class="relative">
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    placeholder=" "
+                    class="peer block w-full border border-gray-300 bg-transparent px-4 pt-5 pb-2 text-gray-800 shadow-sm focus:border-[#cc5410] focus:ring-2 focus:ring-[#cc5410] focus:outline-none transition"
+                  />
+                  <label
+                    for="name"
+                    class="absolute left-4 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-[#a03c08]"
+                    >Name</label
+                  >
+                </div>
+                <div class="relative">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    placeholder=" "
+                    class="peer block w-full border border-gray-300 bg-transparent px-4 pt-5 pb-2 text-gray-800 shadow-sm focus:border-[#cc5410] focus:ring-2 focus:ring-[#cc5410] focus:outline-none transition"
+                  />
+                  <label
+                    for="email"
+                    class="absolute left-4 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-[#a03c08]"
+                    >Email</label
+                  >
+                </div>
+                <div class="relative">
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="4"
+                    required
+                    placeholder=" "
+                    class="peer block w-full border border-gray-300 bg-transparent px-4 pt-5 pb-2 text-gray-800 shadow-sm focus:border-[#cc5410] focus:ring-2 focus:ring-[#cc5410] focus:outline-none transition"
+                  ></textarea>
+                  <label
+                    for="message"
+                    class="absolute left-4 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-[#a03c08]"
+                    >Message</label
+                  >
+                </div>
+                <button
+                  type="submit"
+                  class="w-full bg-[var(--club-taupe)] hover:bg-[var(--club-sand)] text-white font-semibold py-3 px-6 shadow-md transition transform hover:scale-105 font-['Inter']"
+                >
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer
+      class="bg-[var(--club-taupe)] text-gray-200 pt-16 pb-8 font-['Inter']"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12"
+      >
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <img
+              src="images/logo_ppl.jpg"
+              alt="The Pet People Logo"
+              class="h-10 w-10 md:h-12 md:w-12 object-contain"
+              onerror="this.src = 'https://via.placeholder.com/48?text=PPL'"
+            />
+            <h3
+              class="text-3xl font-bold text-[var(--club-olive)] font-['Cormorant_Garamond']"
+            >
+              ThePetPeople
+            </h3>
+          </div>
+        </div>
+        <div>
+          <h4
+            class="text-lg font-semibold text-white mb-4 font-['Cormorant_Garamond']"
+          >
+            Quick Links
+          </h4>
+          <ul class="space-y-3">
+            <li>
+              <a
+                href="index.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html#services"
+                class="hover:text-[var(--club-rust)] transition"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                href="events.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Events</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html#contact"
+                class="hover:text-[var(--club-rust)] transition"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4
+            class="text-lg font-semibold text-white mb-4 font-['Cormorant_Garamond']"
+          >
+            Contact
+          </h4>
+          <ul class="space-y-3 text-white">
+            <li class="flex items-center">
+              <i class="bx bx-map text-white w-6"></i
+              ><span class="ml-2">Redhill, Off Dharamshi Road, Limuru</span>
+            </li>
+            <li class="flex items-center">
+              <i class="bx bx-phone text-white w-6"></i
+              ><span class="ml-2">+254 798 503 335</span>
+            </li>
+            <li class="flex items-center">
+              <i class="bx bx-envelope text-white w-6"></i
+              ><span class="ml-2">thepetpplke@gmail.com</span>
+            </li>
+          </ul>
+          <div class="flex space-x-4 mt-6">
+            <a
+              href="https://www.instagram.com/thepetpeopleke"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[var(--club-dark-brown)] hover:text-[var(--club-rust)] text-2xl transition"
+              ><i class="bx bxl-instagram"></i
+            ></a>
+            <a
+              href="https://www.tiktok.com/@thepetpeopleke"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[var(--club-dark-brown)] hover:text-[var(--club-rust)] text-2xl transition"
+              ><i class="bx bxl-tiktok"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="border-t border-[var(--club-olive)] mt-12 pt-6 text-center text-[var(--club-olive)] text-sm"
+      >
+        © <span id="year"></span> ThePetPeople. All rights reserved. |
+        <a
+          href="terms.html"
+          class="hover:underline hover:text-[var(--club-gold)] transition"
+          >Terms & Conditions</a
+        >
+        |
+        <a
+          href="privacy.html"
+          class="hover:underline hover:text-[var(--club-gold)] transition"
+          >Privacy Policy</a
+        >
+      </div>
+    </footer>
+
+    <!-- Include events data -->
+    <script src="js/events-data.js"></script>
+
+    <!-- Main JavaScript -->
+    <script>
+      // Format date function
+      function formatEventDate(dateString) {
+        const options = { year: "numeric", month: "long", day: "numeric" };
+        return new Date(dateString).toLocaleDateString("en-US", options);
+      }
+
+      // Get events for homepage - Show upcoming first, then past events
+      // Get events for homepage - Show priority events first
+      function getHomepageEvents() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Priority events to show first (Dog Training Academy: 11, The Margin: 12)
+        const priorityEventIds = [11, 12];
+
+        // Get priority events (these will always show first)
+        const priorityEvents = priorityEventIds
+          .map((id) => eventsData.find((e) => e.id === id))
+          .filter((e) => e); // Remove any that don't exist
+
+        // Get upcoming featured events (for the remaining slots)
+        const upcomingEvents = eventsData
+          .filter((event) => {
+            const eventDate = new Date(event.date);
+            return (
+              event.type === "upcoming" &&
+              event.featured &&
+              !priorityEventIds.includes(event.id) &&
+              eventDate >= today
+            );
+          })
+          .sort((a, b) => new Date(a.date) - new Date(b.date))
+          .slice(0, 4 - priorityEvents.length);
+
+        // Combine: priority events first, then upcoming events
+        let displayEvents = [...priorityEvents, ...upcomingEvents];
+
+        // If still less than 4, add more upcoming events (non-featured)
+        if (displayEvents.length < 4) {
+          const needed = 4 - displayEvents.length;
+          const moreEvents = eventsData
+            .filter((event) => {
+              const eventDate = new Date(event.date);
+              return (
+                event.type === "upcoming" &&
+                !priorityEventIds.includes(event.id) &&
+                !upcomingEvents.includes(event) &&
+                eventDate >= today
+              );
+            })
+            .slice(0, needed);
+          displayEvents = [...displayEvents, ...moreEvents];
+        }
+
+        // If still less than 4, add featured past events
+        if (displayEvents.length < 4) {
+          const needed = 4 - displayEvents.length;
+          const pastEvents = eventsData
+            .filter(
+              (event) =>
+                event.type === "past" &&
+                event.featured &&
+                !priorityEventIds.includes(event.id),
+            )
+            .slice(0, needed);
+          displayEvents = [...displayEvents, ...pastEvents];
+        }
+
+        return displayEvents.slice(0, 4);
+      }
+
+      // Generate HTML for an event card
+      function createEventCard(event) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const isPast = new Date(event.date) < today;
+        const formattedDate = formatEventDate(event.date);
+        const eventLink = isPast
+          ? event.galleryLink || "events.html"
+          : `events.html#event-${event.id}`;
+
+        return `
+            <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-[var(--club-taupe-light)] overflow-hidden flex flex-col h-full group">
+                <div class="relative overflow-hidden bg-gray-100" style="padding-top: 56.25%;">
+                    <img src="${event.image}" alt="${event.title}" class="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.src='https://via.placeholder.com/400x225?text=Event+Image'">
+                    ${
+                      isPast
+                        ? `
+                        <div class="absolute top-3 right-3 bg-gray-900/80 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">
+                            <i class='bx bx-calendar-check'></i> Past Event
+                        </div>
+                    `
+                        : `
+                        <div class="absolute top-3 right-3 bg-[var(--club-rust)] text-white text-xs px-3 py-1 rounded-full animate-pulse">
+                            <i class='bx bx-calendar-star'></i> Upcoming
+                        </div>
+                    `
+                    }
+                    ${
+                      event.featured && !isPast
+                        ? `
+                        <div class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-3 py-1 rounded-full">
+                            <i class='bx bx-star'></i> Featured
+                        </div>
+                    `
+                        : ""
+                    }
+                </div>
+                
+                <div class="p-5 flex flex-col flex-1">
+                    <div class="flex items-center gap-2 text-xs text-[var(--club-taupe)] mb-2 flex-wrap">
+                        <span class="flex items-center gap-1"><i class='bx bx-calendar'></i> ${formattedDate}</span>
+                        <span class="w-1 h-1 bg-[var(--club-taupe)] rounded-full"></span>
+                        <span class="flex items-center gap-1"><i class='bx bx-time'></i> ${event.time.split(" - ")[0]}</span>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold text-[var(--club-dark-brown)] mb-2 line-clamp-1">${event.title}</h3>
+                    
+                    <div class="flex items-center gap-1 text-sm text-gray-600 mb-3">
+                        <i class='bx bx-map'></i>
+                        <span class="line-clamp-1">${event.location}</span>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-1 line-clamp-3">${event.description}</p>
+                    
+                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                        <div class="text-[var(--club-rust)] font-bold text-sm"><i class='bx bx-money'></i> ${event.price}</div>
+                        <a href="${eventLink}" class="inline-flex items-center gap-1 px-4 py-2 bg-[var(--club-sand)] hover:bg-[var(--club-rust)] text-white rounded-lg transition font-semibold text-sm group">
+                            ${isPast ? "View Photos" : "Register Now"}
+                            <i class='bx bx-right-arrow-alt group-hover:translate-x-1 transition-transform'></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+      }
+
+      // Load and display events on homepage
+      function loadHomepageEvents() {
+        const eventsGrid = document.getElementById("home-events-grid");
+        if (!eventsGrid) return;
+
+        const events = getHomepageEvents();
+
+        if (events.length === 0) {
+          eventsGrid.innerHTML = `
+                <div class="col-span-full text-center py-12">
+                    <i class='bx bx-calendar-x text-6xl text-[var(--club-taupe)] mb-4'></i>
+                    <p class="text-[var(--club-olive-light)] text-lg">No events scheduled yet. Check back soon!</p>
+                    <p class="text-[var(--club-olive-light)] text-sm mt-2">Follow us on social media for updates!</p>
+                </div>
+            `;
+          return;
+        }
+
+        const eventsHtml = events
+          .map((event) => createEventCard(event))
+          .join("");
+        eventsGrid.innerHTML = eventsHtml;
+
+        const eventCount = events.length;
+        eventsGrid.classList.remove(
+          "flex",
+          "justify-center",
+          "md:grid-cols-2",
+          "lg:grid-cols-3",
+          "xl:grid-cols-4",
+        );
+
+        if (eventCount === 1) {
+          eventsGrid.classList.add("flex", "justify-center");
+          const firstChild = eventsGrid.querySelector("div:first-child");
+          if (firstChild)
+            firstChild.classList.add("max-w-md", "mx-auto", "w-full");
+        } else if (eventCount === 2) {
+          eventsGrid.classList.add("md:grid-cols-2");
+        } else if (eventCount === 3) {
+          eventsGrid.classList.add("lg:grid-cols-3");
+        } else {
+          eventsGrid.classList.add("lg:grid-cols-3", "xl:grid-cols-4");
+        }
+      }
+
+      // DOM Elements and Event Listeners
+      document.addEventListener("DOMContentLoaded", function () {
+        // Load events
+        if (typeof eventsData !== "undefined") {
+          loadHomepageEvents();
+        } else {
+          console.error("eventsData not defined");
+          const eventsGrid = document.getElementById("home-events-grid");
+          if (eventsGrid) {
+            eventsGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class='bx bx-error-circle text-6xl text-[var(--club-rust)] mb-4'></i>
+                        <p class="text-[var(--club-olive-light)] text-lg">Error loading events</p>
+                        <p class="text-[var(--club-olive-light)] text-sm mt-2">Please refresh the page</p>
+                    </div>
+                `;
+          }
+        }
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        if (mobileMenuBtn && mobileMenu) {
+          mobileMenuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+            const hamburger = document.getElementById("hamburger-icon");
+            const closeIcon = document.getElementById("close-icon");
+            if (hamburger && closeIcon) {
+              hamburger.classList.toggle("hidden");
+              closeIcon.classList.toggle("hidden");
+            }
+          });
+        }
+
+        // Floating social menu toggle
+        const socialToggle = document.getElementById("social-toggle");
+        const socialIcons = document.getElementById("social-icons");
+        const toggleIcon = document.getElementById("toggle-icon");
+        if (socialToggle && socialIcons) {
+          socialToggle.addEventListener("click", () => {
+            socialIcons.classList.toggle("hidden");
+            if (toggleIcon) {
+              if (socialIcons.classList.contains("hidden")) {
+                toggleIcon.classList.remove("bx-x");
+                toggleIcon.classList.add("bx-message-rounded-dots");
+              } else {
+                toggleIcon.classList.remove("bx-message-rounded-dots");
+                toggleIcon.classList.add("bx-x");
+              }
+            }
+          });
+        }
+
+        // Contact form handler
+        const contactForm = document.getElementById("contact-form-static");
+        if (contactForm) {
+          contactForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            showMessage(
+              "Thank you for your message! We'll get back to you soon.",
+            );
+            contactForm.reset();
+            document.querySelectorAll(".peer").forEach((input) => {
+              if (input.value === "") input.dispatchEvent(new Event("blur"));
+            });
+          });
+        }
+
+        // Video slider
+        const heroVideos = document.querySelectorAll("#hero-slider video");
+        let currentVideo = 0;
+        if (heroVideos.length > 1) {
+          setInterval(() => {
+            heroVideos[currentVideo].style.opacity = "0";
+            currentVideo = (currentVideo + 1) % heroVideos.length;
+            heroVideos[currentVideo].style.opacity = "1";
+          }, 5000);
+        }
+
+        // Update copyright year
+        const yearSpan = document.getElementById("year");
+        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+        // Adjust body padding for fixed navbar
+        const header = document.querySelector("header");
+        if (header) document.body.style.paddingTop = header.offsetHeight + "px";
+
+        window.addEventListener("resize", () => {
+          if (header)
+            document.body.style.paddingTop = header.offsetHeight + "px";
+        });
+      });
+
+      // Message display function
+      function showMessage(message) {
+        const container = document.getElementById("message-container");
+        if (!container) return;
+        const msgDiv = document.createElement("div");
+        msgDiv.className =
+          "bg-[var(--club-sand)] text-white px-4 py-2 rounded-md mb-2 shadow-md";
+        msgDiv.textContent = message;
+        container.appendChild(msgDiv);
+        setTimeout(() => msgDiv.remove(), 3000);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Gallery - The Pet People</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Boxicons CDN -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Styles -->
+    <style>
+      :root {
+        --club-dark-brown: #3f2c00;
+        --club-dark-brown-light: #827559;
+        --club-olive: #454024;
+        --club-olive-light: #868270;
+        --club-rust: #823210;
+        --club-rust-light: #ad7963;
+        --club-taupe: #95866e;
+        --club-taupe-light: #bab0a0;
+        --club-sand: #d2b699;
+        --club-sand-light: #e1cfbc;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #fff;
+        color: #333;
+        padding-top: 0;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(5px);
+        }
+      }
+
+      .animate-bounce {
+        animation: bounce 1s infinite;
+      }
+
+      /* Category filter button styles */
+      .filter-btn {
+        transition: all 0.3s ease;
+      }
+
+      .filter-btn.active {
+        background-color: var(--club-rust);
+        color: white;
+        border-color: var(--club-rust);
+      }
+
+      .filter-btn.active i {
+        color: white;
+      }
+
+      .filter-btn:hover:not(.active) {
+        background-color: var(--club-sand);
+        color: var(--club-dark-brown);
+        border-color: var(--club-sand);
+      }
+
+      /* Gallery item animations */
+      .gallery-item {
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Video play button overlay */
+      .video-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      .video-overlay:hover {
+        background: var(--club-rust);
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+
+      .video-overlay i {
+        font-size: 30px;
+        color: white;
+        margin-left: 4px;
+      }
+
+      /* Video modal */
+      .video-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .video-modal.active {
+        display: flex;
+      }
+
+      .video-modal video {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 8px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .close-video {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+        color: white;
+        font-size: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .close-video:hover {
+        color: var(--club-rust);
+        transform: scale(1.1);
+      }
+
+      /* Counter text */
+      .counter-text {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+
+  <body class="font-sans antialiased min-h-screen flex flex-col">
+    <!-- NAVBAR (same as index.html) -->
+    <header id="header" class="fixed w-full z-30 top-0 left-0">
+      <!-- INFO BAR -->
+      <div
+        id="info-bar"
+        class="hidden md:flex bg-[var(--club-sand-light)] text-dark text-xs transition-colors duration-300 py-[2px]"
+      >
+        <div
+          class="max-w-7xl mx-auto px-3 sm:px-5 lg:px-8 flex justify-between w-full items-center"
+        >
+          <div class="flex items-center space-x-3">
+            <a
+              href="#"
+              class="hover:text-[var(--club-rust)] transition"
+              aria-label="Facebook"
+            >
+              <i class="bx bxl-facebook text-sm"></i>
+            </a>
+            <a
+              href="https://www.instagram.com/thepetpeopleke"
+              target="_blank"
+              class="hover:text-[var(--club-rust)] transition"
+              aria-label="Instagram"
+            >
+              <i class="bx bxl-instagram text-sm"></i>
+            </a>
+            <a
+              href="#"
+              class="hover:text-[var(--club-rust)] transition"
+              aria-label="Twitter"
+            >
+              <i class="bx bxl-twitter text-sm"></i>
+            </a>
+          </div>
+          <div
+            class="hidden sm:flex justify-center text-[10px] text-dark font-['Montserrat']"
+          >
+            (Mon–Sat: 9am–9pm | Sun: 10am–8pm)
+          </div>
+          <div class="flex items-center space-x-2 font-['Montserrat']">
+            <a
+              href="tel:+254798503335"
+              class="flex items-center space-x-1 hover:text-[var(--club-rust)] transition"
+            >
+              <i class="bx bx-phone text-sm" aria-hidden="true"></i>
+              <span class="sr-only">Call</span>
+              <span class="text-[11px]">+254 798 503 335</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- NAVBAR -->
+      <nav
+        id="navbar"
+        role="navigation"
+        aria-label="Main navigation"
+        class="navbar w-full bg-white shadow-sm fixed top-0 z-50"
+      >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16 items-center">
+            <a href="index.html" class="flex items-center gap-3">
+              <img
+                src="images/logo_ppl.jpg"
+                alt="The Pet People Logo"
+                class="h-10 w-10 md:h-12 md:w-12 object-contain"
+                onerror="this.src = 'https://via.placeholder.com/48?text=PPL'"
+              />
+              <div class="leading-tight">
+                <div class="text-sm font-medium text-[var(--club-dark-brown)]">
+                  ThePetPeople
+                </div>
+                <div class="text-xs text-gray-500 hidden sm:block">
+                  Care • Groom • Love
+                </div>
+              </div>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-6 font-['Inter']">
+              <a
+                href="index.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Home</a
+              >
+              <a
+                href="gallery.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Gallery</a
+              >
+              <a
+                href="events.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Events</a
+              >
+              <a
+                href="index.html#contact"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Contact</a
+              >
+              <a
+                href="blogs.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Blogs</a
+              >
+              <a
+                href="shop.html"
+                class="nav-link text-[var(--club-dark-brown)] hover:text-[var(--club-sand)]"
+                >Shop</a
+              >
+            </div>
+
+            <button
+              id="mobile-menu-button"
+              type="button"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+              class="md:hidden p-2 rounded focus:outline-none"
+            >
+              <svg
+                id="hamburger-icon"
+                class="h-6 w-6 block"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="var(--club-sand)"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <svg
+                id="close-icon"
+                class="h-6 w-6 hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="var(--club-sand)"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+          <div class="px-4 pb-4 pt-2 space-y-1 font-['Inter']">
+            <a
+              href="index.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Home</a
+            >
+            <a
+              href="gallery.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Gallery</a
+            >
+            <a
+              href="events.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Events</a
+            >
+            <a
+              href="index.html#contact"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Contact</a
+            >
+            <a
+              href="blogs.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Blogs</a
+            >
+            <a
+              href="shop.html"
+              class="mobile-nav-link block px-3 py-2 rounded hover:bg-gray-100"
+              >Shop</a
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1">
+      <!-- HERO SECTION -->
+      <section class="relative h-[60vh] md:h-[70vh] w-full overflow-hidden">
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          class="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="videos/hero2.mp4" type="video/mp4" />
+        </video>
+
+        <div class="absolute inset-0 bg-black/40 z-0"></div>
+
+        <div
+          class="relative z-10 flex flex-col items-center justify-center h-full text-center px-6"
+        >
+          <h1 class="text-4xl sm:text-5xl font-['Cinzel'] text-white mb-3">
+            Our <span class="text-[var(--club-sand-light)]">Gallery</span>
+          </h1>
+          <p class="text-white/80 text-md md:text-lg max-w-3xl">
+            Explore the joyful moments of pets and their humans.
+          </p>
+        </div>
+      </section>
+
+      <!-- GALLERY GRID -->
+      <section class="pt-24 pb-20 bg-[var(--club-sand-light)]">
+        <div class="max-w-7xl mx-auto px-6">
+          <!-- Section Title -->
+          <div class="text-center mb-12">
+            <h2
+              class="text-3xl font-['Cinzel'] text-[var(--club-dark-brown)] mb-4"
+            >
+              Capturing <span class="text-[var(--club-rust)]">Moments</span> of
+              Joy
+            </h2>
+            <p class="text-[var(--club-olive)] max-w-2xl mx-auto">
+              Browse through our collection of happy pets, special events, and
+              memorable moments
+            </p>
+          </div>
+
+          <!-- Category Filters -->
+          <div
+            class="flex flex-wrap justify-center gap-3 mb-12"
+            id="category-filters"
+          >
+            <!-- Filter buttons will be dynamically generated here -->
+          </div>
+
+          <!-- Counter Display -->
+          <div class="text-center mb-8">
+            <p class="counter-text text-[var(--club-olive)]">
+              Showing <span id="visible-count">0</span> of
+              <span id="total-count">0</span> moments
+            </p>
+          </div>
+
+          <!-- Gallery Grid -->
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            id="gallery-grid"
+          >
+            <!-- Gallery items will be dynamically generated here -->
+          </div>
+
+          <!-- No Results Message -->
+          <div id="no-results" class="text-center py-12 hidden">
+            <i
+              class="bx bx-camera-off text-6xl text-[var(--club-taupe)] mb-4"
+            ></i>
+            <p class="text-[var(--club-dark-brown-light)] text-lg">
+              No moments found in this category.
+            </p>
+            <p class="text-[var(--club-olive-light)] mt-2">
+              Try selecting a different category!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIGHTBOX FOR IMAGES -->
+      <div
+        id="lightbox"
+        class="fixed inset-0 bg-black/90 hidden z-50 flex items-center justify-center px-4"
+      >
+        <button
+          onclick="closeLightbox()"
+          class="absolute top-5 right-5 text-white text-5xl hover:text-[var(--club-sand-light)] transition z-50"
+        >
+          &times;
+        </button>
+        <button
+          onclick="prevImage()"
+          class="absolute left-5 top-1/2 transform -translate-y-1/2 text-white text-5xl hover:text-[var(--club-sand-light)] transition z-50"
+        >
+          &lsaquo;
+        </button>
+        <button
+          onclick="nextImage()"
+          class="absolute right-5 top-1/2 transform -translate-y-1/2 text-white text-5xl hover:text-[var(--club-sand-light)] transition z-50"
+        >
+          &rsaquo;
+        </button>
+        <img
+          id="lightbox-img"
+          src=""
+          class="max-h-[85vh] max-w-[90vw] rounded-xl shadow-2xl border-4 border-[var(--club-sand-light)]"
+        />
+        <div
+          id="lightbox-caption"
+          class="absolute bottom-5 left-0 right-0 text-center text-white bg-black/50 py-2 mx-auto w-full max-w-lg rounded"
+        ></div>
+      </div>
+
+      <!-- VIDEO MODAL -->
+      <div id="video-modal" class="video-modal">
+        <span class="close-video" onclick="closeVideoModal()">&times;</span>
+        <video id="modal-video" controls>
+          <source id="modal-video-source" src="" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </main>
+
+    <!-- FOOTER (same as index.html) -->
+    <footer
+      class="bg-[var(--club-taupe)] text-gray-200 pt-16 pb-8 font-['Inter']"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12"
+      >
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <img
+              src="images/logo_ppl.jpg"
+              alt="The Pet People Logo"
+              class="h-10 w-10 md:h-12 md:w-12 object-contain"
+              onerror="this.src = 'https://via.placeholder.com/48?text=PPL'"
+            />
+            <h3
+              class="text-3xl font-bold text-[var(--club-olive)] font-['Cormorant_Garamond']"
+            >
+              ThePetPeople
+            </h3>
+          </div>
+        </div>
+        <div>
+          <h4
+            class="text-lg font-semibold text-white mb-4 font-['Cormorant_Garamond']"
+          >
+            Quick Links
+          </h4>
+          <ul class="space-y-3">
+            <li>
+              <a
+                href="index.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html#services"
+                class="hover:text-[var(--club-rust)] transition"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                href="events.html"
+                class="hover:text-[var(--club-rust)] transition"
+                >Events</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html#contact"
+                class="hover:text-[var(--club-rust)] transition"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4
+            class="text-lg font-semibold text-white mb-4 font-['Cormorant_Garamond']"
+          >
+            Contact
+          </h4>
+          <ul class="space-y-3 text-white">
+            <li class="flex items-center">
+              <i class="bx bx-map text-white w-6"></i
+              ><span class="ml-2">Redhill, Off Dharamshi Road, Limuru</span>
+            </li>
+            <li class="flex items-center">
+              <i class="bx bx-phone text-white w-6"></i
+              ><span class="ml-2">+254 798 503 335</span>
+            </li>
+            <li class="flex items-center">
+              <i class="bx bx-envelope text-white w-6"></i
+              ><span class="ml-2">thepetpplke@gmail.com</span>
+            </li>
+          </ul>
+          <div class="flex space-x-4 mt-6">
+            <a
+              href="https://www.instagram.com/thepetpeopleke"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[var(--club-dark-brown)] hover:text-[var(--club-rust)] text-2xl transition"
+              ><i class="bx bxl-instagram"></i
+            ></a>
+            <a
+              href="https://www.tiktok.com/@thepetpeopleke"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[var(--club-dark-brown)] hover:text-[var(--club-rust)] text-2xl transition"
+              ><i class="bx bxl-tiktok"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="border-t border-[var(--club-olive)] mt-12 pt-6 text-center text-[var(--club-olive)] text-sm"
+      >
+        © <span id="year"></span> ThePetPeople. All rights reserved. |
+        <a
+          href="terms.html"
+          class="hover:underline hover:text-[var(--club-gold)] transition"
+          >Terms & Conditions</a
+        >
+        |
+        <a
+          href="privacy.html"
+          class="hover:underline hover:text-[var(--club-gold)] transition"
+          >Privacy Policy</a
+        >
+      </div>
+    </footer>
+
+    <!-- Gallery Data and JavaScript -->
+    <script src="js/gallery-data.js"></script>
+    <script>
+      // Current filter and pagination
+      let currentFilter = "all";
+      let filteredItems = [];
+      let currentImageIndex = 0;
+      let currentImageList = [];
+
+      // DOM Elements
+      const galleryGrid = document.getElementById("gallery-grid");
+      const categoryFilters = document.getElementById("category-filters");
+      const visibleCountSpan = document.getElementById("visible-count");
+      const totalCountSpan = document.getElementById("total-count");
+      const noResultsDiv = document.getElementById("no-results");
+
+      // Generate category filter buttons
+      function generateFilters() {
+        const filtersHtml = categories
+          .map(
+            (cat) => `
+            <button class="filter-btn px-5 py-2 rounded-full border-2 border-[var(--club-taupe)] text-[var(--club-dark-brown)] font-medium transition-all duration-300 flex items-center gap-2 ${currentFilter === cat.id ? "active" : ""}" data-filter="${cat.id}">
+                <i class='bx ${cat.icon}'></i>
+                <span>${cat.label}</span>
+            </button>
+        `,
+          )
+          .join("");
+
+        categoryFilters.innerHTML = filtersHtml;
+
+        // Add event listeners to filter buttons
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            currentFilter = btn.dataset.filter;
+            updateActiveFilter();
+            filterAndRenderGallery();
+          });
+        });
+      }
+
+      // Update active filter button styling
+      function updateActiveFilter() {
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          if (btn.dataset.filter === currentFilter) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+      }
+
+      // Filter gallery items based on current filter
+      function filterItems() {
+        if (currentFilter === "all") {
+          filteredItems = [...galleryItems];
+        } else if (currentFilter === "images") {
+          filteredItems = galleryItems.filter((item) => item.type === "image");
+        } else if (currentFilter === "videos") {
+          filteredItems = galleryItems.filter((item) => item.type === "video");
+        } else {
+          filteredItems = galleryItems.filter(
+            (item) => item.category === currentFilter,
+          );
+        }
+
+        // Update counts
+        visibleCountSpan.textContent = filteredItems.length;
+        totalCountSpan.textContent = galleryItems.length;
+
+        // Show/hide no results message
+        if (filteredItems.length === 0) {
+          noResultsDiv.classList.remove("hidden");
+          galleryGrid.classList.add("hidden");
+        } else {
+          noResultsDiv.classList.add("hidden");
+          galleryGrid.classList.remove("hidden");
+        }
+
+        return filteredItems;
+      }
+
+      // Render gallery items
+      function renderGallery() {
+        const items = filterItems();
+
+        if (items.length === 0) {
+          galleryGrid.innerHTML = "";
+          return;
+        }
+
+        const galleryHtml = items
+          .map((item, index) => {
+            if (item.type === "image") {
+              return `
+                    <div class="gallery-item relative w-full overflow-hidden rounded-xl shadow-md bg-[var(--club-taupe-light)] hover:shadow-xl transition-all duration-300 group" style="padding-top: 75%" data-index="${index}">
+                        <img src="${item.src}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 cursor-pointer" loading="lazy" onclick="openImageLightbox(${index})" onerror="this.src='https://via.placeholder.com/400x300?text=Image+Not+Found'">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-end justify-start p-4 opacity-0 group-hover:opacity-100">
+                            <div class="text-white">
+                                <h3 class="font-semibold text-lg">${item.title}</h3>
+                                <p class="text-sm text-white/80">${item.description || ""}</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black/50 rounded-full px-2 py-1 text-white text-xs">
+                            <i class='bx bx-image-alt'></i>
+                        </div>
+                    </div>
+                `;
+            } else {
+              return `
+                    <div class="gallery-item relative w-full overflow-hidden rounded-xl shadow-md bg-[var(--club-taupe-light)] hover:shadow-xl transition-all duration-300 group" style="padding-top: 75%" data-index="${index}">
+                        <img src="${item.poster || item.src.replace(".mp4", "-poster.jpg")}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/400x300?text=Video+Thumbnail'">
+                        <div class="video-overlay" onclick="openVideoModal('${item.src}', '${item.title}')">
+                            <i class='bx bx-play'></i>
+                        </div>
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-end justify-start p-4 opacity-0 group-hover:opacity-100">
+                            <div class="text-white">
+                                <h3 class="font-semibold text-lg">${item.title}</h3>
+                                <p class="text-sm text-white/80">${item.description || ""}</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black/50 rounded-full px-2 py-1 text-white text-xs">
+                            <i class='bx bx-video'></i>
+                        </div>
+                    </div>
+                `;
+            }
+          })
+          .join("");
+
+        galleryGrid.innerHTML = galleryHtml;
+
+        // Store current image list for lightbox navigation
+        currentImageList = items.filter((item) => item.type === "image");
+      }
+
+      // Open image lightbox
+      function openImageLightbox(index) {
+        const images = filteredItems.filter((item) => item.type === "image");
+        currentImageIndex = images.findIndex(
+          (img) => img === filteredItems[index],
+        );
+        const image = images[currentImageIndex];
+
+        if (image) {
+          const lightboxImg = document.getElementById("lightbox-img");
+          const caption = document.getElementById("lightbox-caption");
+          lightboxImg.src = image.src;
+          caption.innerHTML = `<strong>${image.title}</strong><br>${image.description || ""}`;
+          document.getElementById("lightbox").classList.remove("hidden");
+        }
+      }
+
+      // Close lightbox
+      function closeLightbox() {
+        document.getElementById("lightbox").classList.add("hidden");
+      }
+
+      // Previous image in lightbox
+      function prevImage() {
+        const images = filteredItems.filter((item) => item.type === "image");
+        currentImageIndex =
+          (currentImageIndex - 1 + images.length) % images.length;
+        const image = images[currentImageIndex];
+        const lightboxImg = document.getElementById("lightbox-img");
+        const caption = document.getElementById("lightbox-caption");
+        lightboxImg.src = image.src;
+        caption.innerHTML = `<strong>${image.title}</strong><br>${image.description || ""}`;
+      }
+
+      // Next image in lightbox
+      function nextImage() {
+        const images = filteredItems.filter((item) => item.type === "image");
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        const image = images[currentImageIndex];
+        const lightboxImg = document.getElementById("lightbox-img");
+        const caption = document.getElementById("lightbox-caption");
+        lightboxImg.src = image.src;
+        caption.innerHTML = `<strong>${image.title}</strong><br>${image.description || ""}`;
+      }
+
+      // Open video modal
+      function openVideoModal(videoSrc, title) {
+        const modal = document.getElementById("video-modal");
+        const video = document.getElementById("modal-video");
+        const source = document.getElementById("modal-video-source");
+
+        source.src = videoSrc;
+        video.load();
+        modal.classList.add("active");
+        video.play();
+
+        // Update video title in modal (optional)
+        const existingTitle = modal.querySelector(".video-title");
+        if (existingTitle) existingTitle.remove();
+
+        const titleDiv = document.createElement("div");
+        titleDiv.className =
+          "video-title absolute bottom-20 left-0 right-0 text-center text-white bg-black/50 py-2";
+        titleDiv.textContent = title;
+        modal.appendChild(titleDiv);
+      }
+
+      // Close video modal
+      function closeVideoModal() {
+        const modal = document.getElementById("video-modal");
+        const video = document.getElementById("modal-video");
+        video.pause();
+        modal.classList.remove("active");
+      }
+
+      // Filter and re-render
+      function filterAndRenderGallery() {
+        renderGallery();
+      }
+
+      // Initialize everything
+      function init() {
+        generateFilters();
+        renderGallery();
+
+        // Add ESC key listener for video modal
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") {
+            closeLightbox();
+            closeVideoModal();
+          }
+        });
+      }
+
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+          const hamburger = document.getElementById("hamburger-icon");
+          const closeIcon = document.getElementById("close-icon");
+          if (hamburger && closeIcon) {
+            hamburger.classList.toggle("hidden");
+            closeIcon.classList.toggle("hidden");
+          }
+        });
+      }
+
+      // Update copyright year
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Adjust body padding for fixed navbar
+      const header = document.querySelector("header");
+      if (header) {
+        document.body.style.paddingTop = header.offsetHeight + "px";
+      }
+
+      window.addEventListener("resize", function () {
+        if (header) {
+          document.body.style.paddingTop = header.offsetHeight + "px";
+        }
+      });
+
+      // Start the app
+      init();
+    </script>
+  </body>
+</html>
