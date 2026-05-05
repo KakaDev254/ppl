@@ -7,7 +7,7 @@ const productsData = [
     subcategory: "dog-food",
     price: 2500,
     originalPrice: 3200,
-    image: "images/products/dog-food-chicken.jpg",
+    image: "images/products/meals.jpg",
     images: [
       "images/products/dog-food-chicken.jpg",
       "images/products/dog-food-chicken-2.jpg",
